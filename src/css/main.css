@@ -1,0 +1,11 @@
+@import "tailwind/_base.css";
+@import "tailwind/_components.css";
+@import "tailwind/_utilities.css";
+
+body {
+    font-family: Roboto, sans-serif !important;
+}
+
+html,body, #__next, #__next>div {
+    height: 100%;    
+}
