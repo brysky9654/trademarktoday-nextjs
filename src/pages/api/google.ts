@@ -6,7 +6,7 @@ import { JWT_SIGN_KEY } from '@/types/utils';
 import usersModel from '@/models/usersModel';
 const CLIENT_ID = '87243843360-rthve5gqor338s2ukej91u3qu4jbkbso.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'http://localhost/api/google';
+const REDIRECT_URI = 'http://trademarktoday.com.au/api/google';
 export default async function handler(req: Request, res: Response): Promise<void> {
   const { code } = req.query;
   const codeAsString: string = code?.toString() ?? '';

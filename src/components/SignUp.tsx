@@ -32,19 +32,19 @@ const SignUp = ({ openState: { open, setOpen }, setMsg }: { openState: { open: b
         const { email, name, password, given_name, family_name } = otpState.formData;
         setValidEmail(validateEmail(email));
         setValidPassword(password.trim() !== "");
-        const nameCheck = [name,given_name,family_name].every(n=>n.trim()!=="");
+        const nameCheck = [name, given_name, family_name].every(n => n.trim() !== "");
         setValidName(nameCheck)
         if (!validateEmail(email)) return;
-        if (password.trim() === "") return;        
+        if (password.trim() === "") return;
         if (!nameCheck) return;
-        if(email.endsWith("@gmail.com")){
+        if (email.endsWith("@gmail.com")) {
             setMsg("Please use Google Sign above.");
             setOpen(true);
             return;
         }
         //!  Validate
         dispatchOtpState({ type: "SET_WAITING", payload: { value: true } })
-        const { data } = await axios.get(`/api/users?email=${encodeURIComponent(email)}`);
+        const { data: { data } } = await axios.get(`/api/users?email=${encodeURIComponent(email)}`);
         dispatchOtpState({ type: "SET_WAITING", payload: { value: false } })
         if (data.length > 0) {
             setMsg("Already registered user")
