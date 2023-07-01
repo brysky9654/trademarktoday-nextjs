@@ -1,21 +1,20 @@
-import db from "@/db/db";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { AuthStatus } from "@/types/interface";
 import { Request, Response } from "express";
 import { JWT_SIGN_KEY } from "@/types/utils";
-export default function handler(req: Request, res: Response) {
+import usersModel from '@/models/usersModel';
+export default async function handler(req: Request, res: Response) {
     let authStatus: AuthStatus = "NONE";
     const { email, password } = req.body;
-    if (req.method === 'POST') {
-        db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results, fields) => {
-            if (err) throw err
-            console.log(results)
+    try {
+        if (req.method === 'POST') {
+            const results = await usersModel.find({ email });
             if (results.length === 0) {
                 authStatus = "UNREGISTER_USER"
             } else {
                 const hashedPassword = results[0].password;
-                const match = await bcrypt.compare(password, results[0].password);
+                const match = await bcrypt.compare(password, hashedPassword as string);
                 if (match) {
                     authStatus = "PASSED";
                     const { name, given_name, family_name, picture } = results[0]
@@ -30,8 +29,17 @@ export default function handler(req: Request, res: Response) {
                 }
             }
             res.status(200).json({ authStatus })
-        })
-    } else {
-        res.status(405).json({ message: 'Method not allowed' })
+        } else {
+            res.status(405).json({ message: 'Method not allowed' })
+        }
+    } catch (error) {
+        console.log("API error", error);
+        if (!res.headersSent) {
+            res.send(500).json({
+                success: false,
+                data: "Server error",
+            });
+        }
     }
+
 }

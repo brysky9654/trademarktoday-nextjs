@@ -28,7 +28,7 @@ const Start = () => {
             <p className='text-[22px] bg-white rounded-full shadow-[0_0_8px_8px_#fff]'>If you decide to apply, it can cost as little as $330.</p>
           </div>
           <div className='p-2'>
-            <Link className='text-[22px] underline hover:no-underline hover:bg-[#E0F3F4] font-bold' href="#"> More about trade marks. </Link>
+            <Link className='text-[22px] underline hover:no-underline hover:bg-[#E0F3F4] font-bold' href="#"> More about trade marks.</Link>
           </div>
           <div>
             <button onClick={handleClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all ease-in-out bg-[#1D252C] w-72 h-12 text-white'>Start</button>

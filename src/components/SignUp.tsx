@@ -44,7 +44,7 @@ const SignUp = ({ openState: { open, setOpen }, setMsg }: { openState: { open: b
         }
         //!  Validate
         dispatchOtpState({ type: "SET_WAITING", payload: { value: true } })
-        const { data } = await axios.get(`/api/users/email/${encodeURIComponent(email)}`);
+        const { data } = await axios.get(`/api/users?email=${encodeURIComponent(email)}`);
         dispatchOtpState({ type: "SET_WAITING", payload: { value: false } })
         if (data.length > 0) {
             setMsg("Already registered user")

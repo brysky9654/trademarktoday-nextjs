@@ -2,7 +2,7 @@ import mysql from 'mysql'
 import natural, { TfIdf } from 'natural';
 import stringSimilarity from 'string-similarity';
 
-const db = mysql.createPool({
+const mysqldb = mysql.createPool({
   connectionLimit: 10,
   host: 'localhost',
   user: 'root',
@@ -10,7 +10,7 @@ const db = mysql.createPool({
   database: 'trademarktoday'
 })
 
-export default db;
+export default mysqldb;
 
 
 

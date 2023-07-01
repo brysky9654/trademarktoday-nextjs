@@ -1,7 +1,6 @@
 import { IncomingMessage, ServerResponse } from "http"
 export type AuthStatus = "NONE" | "PASSED" | "UNREGISTER_USER" | "INVALID_PASSWORD"
 export type User = {
-  ID: string
   email: string
   name:string
   password: string

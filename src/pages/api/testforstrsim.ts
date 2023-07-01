@@ -1,34 +1,24 @@
-import db from "@/db/db";
 import natural, { TfIdf, WordNet } from 'natural';
 import stringSimilarity from 'string-similarity'
 import { Request, Response } from "express";
+import keywordsModel from '@/models/keywordsModel'
 
-export default function handler(req: Request, res: Response) {
+export default async function handler(req: Request, res: Response) {
     if (req.method === 'GET') {
-        getProductNames()
-            .then(productNames => {
-                const processedProductNames: string[] = (productNames) as string[];//preprocessProductNames(...)
-                const query = req.query.search;
-                const searchResults = performSearch(query, processedProductNames);
-                console.log(searchResults);
-                res.status(200).json(searchResults)
-            })
-            .catch(error => {
-                console.error(error);
-            });
+
+        try {
+            const keywords:string[] = ((await keywordsModel.find()) as {keyword:string}[]).map(row => row.keyword);
+            const query = req.query.search as string;
+            const searchResults = performSearch(query, keywords);
+            console.log(searchResults);
+            res.status(200).json(searchResults);
+        }
+        catch (error) {
+            console.error(error);
+        }
     } else {
         res.status(405).json({ message: 'Method not allowed' })
     }
-}
-function getProductNames() {
-    const query = 'SELECT keyword FROM keywords';
-
-    return new Promise((resolve, reject) => {
-        db.query(query, function (error, results) {
-            const productNames = results.map(row => row.keyword);
-            resolve(productNames);
-        });
-    });
 }
 function preprocessProductNames(productNames: string[]) {
     const processedNames = productNames.map(name => {

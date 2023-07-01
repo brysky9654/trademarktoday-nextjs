@@ -127,8 +127,6 @@ const Classify = () => {
 
                             </section>
                             <PortalClass />
-                            <PortalClass />
-                            <PortalClass />
                         </section>
                         <section className="col-span-4 flex flex-col gap-4 p-4 border h-fit border-[#C8CAD0] rounded-md" >
                             <h5 className="font-mont text-[16px] leading-7">Your trade mark</h5>
