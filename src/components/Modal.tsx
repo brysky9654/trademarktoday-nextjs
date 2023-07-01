@@ -102,7 +102,7 @@ export const OTPModal = ({ openState: { open, setOpen }, setMsg }: { openState: 
         if (otpState.code === c) {
             const { given_name, family_name, email, name, password } = otpState.formData;
             const token = jwt.sign({ given_name, family_name, picture: '', email, name }, JWT_SIGN_KEY);
-            const { data: _data } = await axios.post('/api/users', { given_name, family_name, picture: '', email, name, password: hash(password) })
+            const { data: _data } = await axios.post('/api/users', { given_name, family_name, picture: '', email, name, password: await hash(password) })
             setCookie(null, 'token', token, {
                 maxAge: 60 * 60,
                 path: '/',
