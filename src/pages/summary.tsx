@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import WaitingLocker from "../components/WaitingLocker";
 import { useRouter } from "next/router";
 import ProgressIndicator from "../components/ProgressIndicator";
@@ -6,9 +6,10 @@ import Link from "next/link";
 import Image from "next/image";
 import PortalSummaryA from "../components/PortalSummaryA";
 import PortalSummaryB from "../components/PortalSummaryB";
-import {ConfirmStartAgainModal} from "../components/Modal";
+import { ConfirmStartAgainModal } from "../components/Modal";
 import { Alert2, Alert4 } from "../components/AlertContainers";
 import TMCheckLayout from "../layout/TMCheckLayout";
+import { PiniaStore } from "@/store/store";
 
 const CardContainer = ({ children }: { children: ReactNode }) => {
     return (
@@ -54,7 +55,7 @@ const CardARow = () => {
     )
 }
 const Summary = () => {
-
+    const { pinia, setPinia } = useContext(PiniaStore);
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [waiting, setWaiting] = useState(false);
@@ -68,16 +69,16 @@ const Summary = () => {
                     <section id="contentMain" className="grid grid-cols-12 gap-6">
                         <h1 className="col-span-12 text-[32px] leading-10 font-mont">Review results</h1>
                         <Alert4 />
-                        <section id="pleaseReview1" className="col-span-12 shadow-[1px_1px_4px_#00000040] border border-[#c8cad0] rounded-md p-6">
+                        <section id="pleaseReview1" className={`col-span-12 shadow-[1px_1px_4px_#00000040] ${pinia?.markType === 'Logo' ? '' : 'hidden'} border border-[#c8cad0] rounded-md p-6`}>
                             <strong className="text-[#f56600]">Please review</strong>
                             <h2 className="font-mont text-[24px] left-9 mb-6">Check for distinctiveness</h2>
                             <div className="border border-[#C8CAD0] w-fit rounded-md p-4 relative">
-                                <Image alt="img" src="/code_developer.jpg" loading="lazy" width={200} height={200} />
+                                <Image alt="img" src={`/uploads/${pinia?.logo as string}`} onError={(e) => e.currentTarget.src = "/no-avatar.png"} loading="lazy" width={200} height={200} />
                             </div>
                             <div className="flex flex-col gap-4 p-6 mt-4 border-t border-[#C8CAD0] bg-[#F9F9F9]">
                                 <div className="flex items-center justify-between">
                                     <h4 className="text-[16px] leading-7 font-mont">What to do</h4>
-                                    <button onClick={() => alert()} className="flex gap-4 px-4 justify-center items-center hover:bg-[#72757E] hover:text-white transition-all ease-in-out h-[46px] w-fit rounded-sm bg-white border border-black">
+                                    <button onClick={() => router.push('/select')} className="flex gap-4 px-4 justify-center items-center hover:bg-[#72757E] hover:text-white transition-all ease-in-out h-[46px] w-fit rounded-sm bg-white border border-black">
                                         <h4 className="text-[16px] leading-6 font-bold"> Edit my trademark </h4>
                                     </button>
                                 </div>

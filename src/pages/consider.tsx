@@ -2,29 +2,36 @@ import Link from "next/link";
 import Checkbox from '@mui/material/Checkbox';
 import PortalConsider from "../components/PortalConsider";
 import ProgressPane from "../components/ProgressPane";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ProgressIndicator from "../components/ProgressIndicator";
 import { AlertErr } from "../components/AlertContainers";
 import TMCheckLayout from "../layout/TMCheckLayout";
+import { PiniaStore } from "@/store/store";
 
 const Consider = () => {
+  const { pinia, setPinia } = useContext(PiniaStore);
   const router = useRouter();
   const [checked, setChecked] = useState(false);
   const [showAlertForCheck, setShowAlertForCheck] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  useEffect(() => {
+    if (pinia?.acceptedTerms === undefined) return;
+    setChecked(pinia?.acceptedTerms as boolean)
+  }, [pinia])
   const handleClick = () => {
     if (!checked) {
       setShowAlertForCheck(true)
       setShowAlert(true);
-      router.push("#main-start-section")
+      window.scrollTo(0, 0)
     } else {
       router.push("/select")
     }
   }
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked)
-    setShowAlertForCheck(!checked);
+    setShowAlertForCheck(!e.target.checked);
+    setPinia({ ...pinia, acceptedTerms: e.target.checked })
   }
   return (
     <>

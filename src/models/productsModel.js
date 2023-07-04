@@ -9,8 +9,10 @@ const productsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    score:Number,
 },
     { timestamps: false }
 );
-const ProductsModel = mongoose.models.products || mongoose.model("products", productsSchema);8
+productsSchema.index({ product: 'text' });
+const ProductsModel = mongoose.models.products || mongoose.model("products", productsSchema);
 export default ProductsModel;

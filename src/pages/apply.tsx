@@ -20,7 +20,7 @@ const Apply = () => {
         if (!checked) {
             setShowAlertForCheck(true)
             setShowAlert(true);
-            router.push("#main-start-section")
+            window.scrollTo(0,0)
         } else {
             setOpen(true)
         }

@@ -1,25 +1,72 @@
 import { Radio } from "@mui/material";
 import ProgressIndicator from "../components/ProgressIndicator";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import WaitingLocker from "../components/WaitingLocker";
 import UploadLogo from "../components/UploadLogo";
 import { AlertErr, Alert3 } from "../components/AlertContainers";
 import TMCheckLayout from "../layout/TMCheckLayout";
-
+import { PiniaStore } from "@/store/store";
+import { PiniaType } from "@/types/interface";
+export const verifyConsider = (pinia: PiniaType): boolean => {
+    return (pinia?.acceptedTerms as boolean);
+}
 const Select = () => {
+    const { pinia, setPinia } = useContext(PiniaStore);
     const router = useRouter();
     const [waiting, setWaiting] = useState(false);
+    const [msg, setMsg] = useState('Enter a word or phrase to continue.');
     const [showAlert, setShowAlert] = useState(false);
-    const [isWordLogo, setWordLogo] = useState('Word');
-    const [wordContained, setWordContained] = useState(false);
+    const [validUploadLogo, setValidUploadLogo] = useState(true)
+    const [validContainedWord, setValidContainedWord] = useState(true)
+    const [isWordLogo, setWordLogo] = useState(pinia?.markType);
+    const [wordContained, setWordContained] = useState(pinia?.wordContained);
     const [collapsed, setCollapsed] = useState(true);
-    const [word, setWord] = useState('');
-    const [imgFile, setImgFile] = useState<File>();
+    const [word, setWord] = useState(pinia?.word);
+    const [containedWord, setContainedWord] = useState(pinia?.containedWord as string);
+    const [imageDataUrl, setImageDataUrl] = useState(pinia?.logo);
+    useEffect(() => {
+        if (Object.keys(pinia).length === 0 && pinia.constructor === Object) return;
+        setWordLogo(pinia?.markType)
+        setWord(pinia?.word)
+        setWordContained(pinia?.wordContained as boolean)
+        setContainedWord(pinia?.containedWord as string)
+        setImageDataUrl(pinia?.logo)
+        if (!verifyConsider(pinia)) {
+            router.push('/consider')
+        }
+    }, [pinia])
+    useEffect(() => {
+        if (isWordLogo === undefined) return;
+        setPinia({ ...pinia, markType: isWordLogo })
+    }, [isWordLogo])
+    useEffect(() => {
+        if (imageDataUrl === undefined) return;
+        setPinia({ ...pinia, logo: imageDataUrl });
+    }, [imageDataUrl])
+    useEffect(() => {
+        if (word === undefined) return;
+        setPinia({ ...pinia, word: word });
+    }, [word])
+    useEffect(() => {
+        if (wordContained === undefined) return;
+        setPinia({ ...pinia, wordContained: wordContained });
+    }, [wordContained])
+    useEffect(() => {
+        if (containedWord === undefined) return;
+        setPinia({ ...pinia, containedWord: containedWord });
+        setValidContainedWord(containedWord?.trim() !== '')
+    }, [containedWord])
+    useEffect(() => {
+        if (imageDataUrl === undefined) return;
+        setValidUploadLogo(imageDataUrl?.trim() !== '');
+    }, [imageDataUrl])
     const handleWordLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setWordLogo(event.target.value);
+        const value = event.target.value as ('Word' | 'Logo')
+        setWordLogo(value);
+        setPinia({ ...pinia, markType: value })
     };
     const handleWordContainedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setWordContained(event.target.value === "Yes");
@@ -29,15 +76,25 @@ const Select = () => {
     }
 
     const handleNextClick = () => {
-        if ((isWordLogo === "Word" && word.trim() !== '') || (isWordLogo === "Logo" && imgFile !== undefined)) {
+        if ((isWordLogo === "Word" && word?.trim() !== '') ||
+            (isWordLogo === "Logo" && imageDataUrl?.trim() !== '' && (!wordContained || (containedWord !== undefined && containedWord.trim() !== '')))) {
             setWaiting(true);
             setTimeout(() => {
                 setWaiting(false);
                 router.push('/classify');
             }, 5000);
         } else {
+            if (isWordLogo === 'Word') {
+                setMsg('Enter a word or phrase to continue.')
+            } else if (imageDataUrl === undefined || imageDataUrl.trim() === '') {
+                setMsg('You must upload an image to continue.')
+                setValidUploadLogo(false)
+            } else if (containedWord === undefined || containedWord.trim() === '') {
+                setMsg('Enter the word/s in your uploaded image.');
+                setValidContainedWord(false)
+            }
             setShowAlert(true)
-            router.push('#main-start-section');
+            window.scrollTo(0, 0)
         }
     }
     return (
@@ -46,14 +103,14 @@ const Select = () => {
                 <div className="grid gap-y-6">
                     <ProgressIndicator stage={2} />
                     <section id="contentMain" className="grid grid-cols-12 gap-6">
-                        <AlertErr showAlert={showAlert} msg={isWordLogo === 'Word' ? "Enter a word or phrase to continue." : "You must upload an image to continue."} />
+                        <AlertErr showAlert={showAlert} msg={msg} />
                         <h1 className="font-mont text-[32px] font-bold col-span-12">Which trade mark would you like to check?</h1>
                         <Alert3 msg={
                             <>
                                 This initial automated check and trade mark application is for <b> Australia only </b>.
                             </>
                         } />
-                        <section onClick={()=>setWordLogo('Word')} className="col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
+                        <section onClick={() => setWordLogo('Word')} className="col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
                             <div className="flex gap-2 items-center p-4">
                                 <Radio checked={isWordLogo === 'Word'}
                                     onChange={handleWordLogoChange}
@@ -69,7 +126,7 @@ const Select = () => {
                                 <p className="text-[14px] leading-6 font-mont">NBN</p>
                             </div>
                         </section>
-                        <section onClick={()=>setWordLogo('Logo')} className="col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
+                        <section onClick={() => setWordLogo('Logo')} className="col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
                             <div className="flex gap-2 items-center p-4">
                                 <Radio checked={isWordLogo === 'Logo'}
                                     onChange={handleWordLogoChange}
@@ -89,8 +146,8 @@ const Select = () => {
                             <section className="col-span-6 flex flex-col gap-2">
                                 <h3 className="text-[18px] font-mont leading-6">Enter word or phrase</h3>
                                 <span className="text-[14px] leading-6 text-[#72757e]">For example: Tim Tams</span>
-                                <input value={word} required onChange={e => setWord(e.target.value)} className={`h-16 px-5 py-3 bg-[#F5F6F7] border-b-2 ${word.trim() === "" ? "border-red-600" : "border-black"}`} />
-                                {word.trim() === "" && (
+                                <input value={word} required onChange={e => setWord(e.target.value)} className={`h-16 px-5 py-3 bg-[#F5F6F7] border-b-2 ${word?.trim() === "" ? "border-red-600" : "border-black"}`} />
+                                {showAlert && (
                                     <span className="text-red-600 text-xs leading-6">Enter a word or phrase to continue.</span>
                                 )}
                             </section> :
@@ -121,18 +178,23 @@ const Select = () => {
                                         </div>
                                     </div>
                                 </section>
-                                <UploadLogo />
+                                <section className="col-span-6">
+                                    <UploadLogo image={{ imageDataUrl, setImageDataUrl }} />
+                                    {!validUploadLogo && (
+                                        <span className="text-red-600 text-xs leading-6">Upload logo file to continue.</span>
+                                    )}
+                                </section>
                                 <section className="col-span-6 flex flex-col gap-4">
                                     <div className="flex flex-col gap-2">
                                         <p className="text-[16px] font-semibold leading-6">Are there word(s) in the image?</p>
                                         <div className="flex gap-2 items-center h-6">
-                                            <Radio className="w-2" checked={!wordContained}
+                                            <Radio key="no" className="w-2" checked={!wordContained}
                                                 onChange={handleWordContainedChange}
                                                 value="No" />
                                             <p className="text-[16px] font-semibold leading-6">No</p>
                                         </div>
                                         <div className="flex gap-2 items-center h-6">
-                                            <Radio className="w-2" checked={wordContained}
+                                            <Radio key="yes" className="w-2" checked={!!wordContained}
                                                 onChange={handleWordContainedChange}
                                                 value="Yes" />
                                             <p className="text-[16px] font-semibold leading-6">Yes</p>
@@ -142,7 +204,10 @@ const Select = () => {
                                         <Alert3 msg="Identifying words in your image helps with search accuracy. If you want to apply for a “word/phrase” trade mark, this is a separate application." />
                                         <section className="col-span-6 flex flex-col gap-2">
                                             <h3 className="text-[16px] font-bold leading-6">Word(s) in the image</h3>
-                                            <input className=" h-12 px-5 py-3 bg-[#F5F6F7] border-b border-black" />
+                                            <input value={containedWord} onChange={(e) => setContainedWord(e.target.value)} className=" h-12 px-5 py-3 bg-[#F5F6F7] border-b border-black" />
+                                            {!validContainedWord && (
+                                                <span className="text-red-600 text-xs leading-6">Enter the word/s in your uploaded image.</span>
+                                            )}
                                         </section>
                                     </>}
                                 </section>

@@ -10,9 +10,13 @@ const classSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  }
 },
   { timestamps: false }
 );
 
-const proclassModel = mongoose.model.classes || mongoose.model("classes", classSchema);
+const proclassModel = mongoose.models.classes || mongoose.model("classes", classSchema);
 export default proclassModel;

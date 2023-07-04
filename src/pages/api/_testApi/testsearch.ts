@@ -1,4 +1,4 @@
-import mysqldb from "../../db/mysqldb";
+import mysqldb from "@/db/mysqldb";
 import natural, { TfIdf, WordNet } from 'natural';
 import stringSimilarity from 'string-similarity';
 import { Request, Response } from "express";
@@ -7,7 +7,7 @@ export default function handler(req: Request, res: Response) {
 
         const userInput = req.body.search;
 
-        getSimilarWords(userInput)
+        getSynonyms(userInput)
             .then((similarWords) => {
                 console.log(similarWords);
                 res.status(200).json(similarWords)
@@ -23,7 +23,7 @@ export default function handler(req: Request, res: Response) {
         res.status(405).json({ message: 'Method not allowed' })
     }
 }
-const getSimilarWords = (inputWord:string) => {
+const getSynonyms = (inputWord:string) => {
     return new Promise((resolve, reject) => {9
         const wordnet = new WordNet();
         wordnet.lookup(inputWord, (definitions) => {
@@ -42,6 +42,8 @@ const getSimilarWords = (inputWord:string) => {
         });
     });
 };
+
+//! From here remove it.
 // async function intelligentSearch(req: Request, res: Response, userInput: string) {
 
 

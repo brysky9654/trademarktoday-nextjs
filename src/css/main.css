@@ -1,7 +1,9 @@
 @import "tailwind/_base.css";
 @import "tailwind/_components.css";
 @import "tailwind/_utilities.css";
-
+html {
+    scroll-behavior: smooth;
+  }
 body {
     font-family: Roboto, sans-serif !important;
 }

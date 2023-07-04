@@ -21,20 +21,6 @@ const Dashboard = ({ user }: { user: User }) => {
             </>
           } />
         </div>
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
-        <PortalClass />
       </main>
     </>
   )

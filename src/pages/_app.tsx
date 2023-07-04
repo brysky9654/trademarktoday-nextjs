@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Script from 'next/script'
 import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import '../css/main.css'
-import { useRouter } from 'next/router'
+import { PiniaStore } from '@/store/store'
 import MySVG from '../components/svg'
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
@@ -29,7 +29,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   const imageHeight = '960'
 
-  const router = useRouter();
+  const [pinia, setPinia] = useState({});
+  useEffect(()=>{
+    const _pinia = JSON.parse(localStorage.getItem('pinia') as string);
+    setPinia(_pinia);
+  },[])
+  useEffect(() => {
+    localStorage.setItem('pinia', JSON.stringify(pinia));
+  }, [pinia])
   return (
     <>
       {
@@ -77,7 +84,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             {/* <div id="main-start-section" className='flex flex-col'>
               <div className='pb-5 flex-grow'>
                 <Header /> */}
-            <Component {...pageProps} />
+            <PiniaStore.Provider value={{pinia, setPinia}} >
+              <Component {...pageProps} />
+            </PiniaStore.Provider>
             {/* </div>
               <Footer />
             </div> */}
