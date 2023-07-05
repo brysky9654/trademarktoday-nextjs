@@ -43,13 +43,13 @@ const Apply = () => {
                             <div className="flex flex-col gap-4 text-[16px] leading-6 text-[#72757e]">
                                 <div className="flex gap-4">
                                     <svg className='self-center w-[18px] h-[18px] align-baseline inline-block stroke-current fill-none'><use href="#individual"></use></svg>
-                                    <p>IP Australia account</p>
+                                    <p>Sign up with Trade Mark Today</p>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4 text-[16px] leading-6 text-[#72757e]">
                                 <div className="flex gap-4">
                                     <svg className='self-center w-[18px] h-[18px] align-baseline inline-block stroke-current fill-none'><use href="#checklist"></use></svg>
-                                    <p>Owner details (Australia and New Zealand addresses only)</p>
+                                    <p>Trade mark owner details</p>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4 text-[16px] leading-6 text-[#72757e]">
@@ -70,12 +70,12 @@ const Apply = () => {
                                 </div>
                             </div>
                         </div>
-                        <h2 className="font-mont text-[24px] leading-9">What&apos;s in an application?</h2>
+                        <h2 className="font-mont text-[24px] leading-9">Application Process and Costs</h2>
                         <TimeBarAs />
                         <div className=" flex flex-col">
                             <div className="flex gap-2 items-center">
                                 <Checkbox size="small" checked={checked} onChange={handleCheck} />
-                                <p className="text-[16px] leading-6">I understand that this application is based on an automated check and examiners will determine the final outcome.</p>
+                                <p className="text-[16px] leading-6">I acknowledge that the outcome of this application will be determined by the Examiner at IP Australia</p>
                             </div>
                             {showAlertForCheck && <p id="alert-check" className="pl-2 text-[14px] leading-6 text-[#c12]">You must acknowledge your understanding to continue.</p>}
                         </div>
@@ -90,7 +90,7 @@ const Apply = () => {
                         Back
                     </button>
                     <ConfirmSignForApplyModal openState={{ open, setOpen }}>
-                        <button onClick={handleClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#1D252C] w-[140px] h-[46px] text-white'>
+                        <button onClick={handleClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#373f86] w-[140px] h-[46px] text-white'>
                             Apply
                             <svg className='w-[17px] h-[17px] align-baseline inline-block stroke-white'><use href="#arrow-right"></use></svg>
                         </button>

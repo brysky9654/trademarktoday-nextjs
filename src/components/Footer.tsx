@@ -1,9 +1,10 @@
 const Footer = () => {
     return (
         <>
-            <footer className='bg-[#1D252C] text-white leading-7'>
+            <footer className='bg-[#141838] text-white leading-7'>
+                {/* 1D252C */}
                 <div className='max-w-[1272px] mx-auto p-6 pb-10 grid gap-3 grid-cols-12'>
-                    <h2 className='text-2xl col-span-3 font-mont font-bold'>IP Australia</h2>
+                    <h2 className='text-2xl col-span-3 font-mont font-bold'>Trade Mark Today</h2>
                     <nav className='col-start-5 col-span-3'>
                         <ul className='flex gap-y-4 flex-col font-mont text-[16px]'>
                             <style jsx>{`li a {padding:4px; border-radius: 2px;} li a:hover {background-color:#72757E} `}</style>

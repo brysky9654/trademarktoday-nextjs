@@ -61,8 +61,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               {/* <meta property="twitter:image:src" content={image} /> */}
               <meta property="twitter:image:width" content={imageWidth} />
               <meta property="twitter:image:height" content={imageHeight} />
-              <title> (TM) as IP Austrialia</title>
-              <link rel="icon" href="/fav.ico" />
+              <title> Trade Mark Today </title>
+              <link rel="icon" href="/trademarktoday.ico" />
             </Head>
 
             <Script

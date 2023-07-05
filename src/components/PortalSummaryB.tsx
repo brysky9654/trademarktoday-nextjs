@@ -34,7 +34,7 @@ const PortalSummaryB = () => {
                                 pinia?.markType === 'Word' ?
                                     <span className="inline-block min-w-[170px] max-w-[300px] text-center text-[16px] leading-6 py-3 px-4 font-bold bg-[#F9F9F9] rounded-lg border border-[#C8CAD0]">{pinia.word}</span> :
                                     <div className="border border-[#C8CAD0] rounded-md p-4 relative">
-                                        <Image alt="img" src={pinia.logo as string} loading="lazy" onError={(e) => e.currentTarget.src = "/no-avatar.png"} width={200} height={200} />
+                                        <Image alt="img" src={`/uploads/${pinia.logo as string}`} loading="lazy" onError={(e) => e.currentTarget.src = "/no-avatar.png"} width={200} height={200} />
                                     </div>
                             }
                             <Link className="inline-block text-[16px] leading-8 font-semibold px-4 py-2 border border-black rounded-md hover:text-white hover:bg-[#72757E] transition-all ease-in-out" href="/select">Edit</Link>
@@ -50,34 +50,31 @@ const PortalSummaryB = () => {
                             </div>
                             {pinia.classes && Object.keys(pinia.classes).map((classKey: string, index: number) => (
                                 <>
-                                    <div className="flex flex-col gap-4 pt-6">
+                                    <div className="flex gap-4 pt-6 flex-wrap">
                                         {pinia.classes && pinia.classes[classKey] && pinia.classes[classKey].map((item, index) => (
                                             <>
-                                                <div className="flex flex-wrap gap-4">
-
-                                                    <span key={index} className="flex gap-2 text-[12px] leading-6 items-center bg-[#F2F2F6] py-1 px-2 box-border rounded-md ">
-                                                        {item.description}
-                                                    </span>
-                                                </div>
-                                                <div className="flex justify-between w-full pt-4 pr-2">
-                                                    <ClassBadge text={classKey} />
-                                                    $330
-                                                </div>
+                                                <span key={index} className="flex gap-2 text-[12px] leading-6 items-center bg-[#F2F2F6] py-1 px-2 box-border rounded-md ">
+                                                    {item.description}
+                                                </span>
                                             </>
                                         ))}
-                                        <hr />
+                                        <div className="flex justify-between w-full pt-4 pr-2">
+                                            <ClassBadge text={classKey} />
+                                            {index > 0 ? <div><span className="line-through decoration-2 decoration-black text-red-500 font-bold pr-4">$590</span>$490</div> : <span>$590</span>}
+                                        </div>
+                                        <hr className="w-full" />
                                     </div>
                                 </>
                             ))}
                             <div className="flex justify-between w-full mt-6 px-2 py-4 pr-2 uppercase font-bold bg-[#f2f2f6]">
-                                <span>total</span>
-                                <span>${pinia.classes ? Object.keys(pinia.classes).length * 330 : 0}</span>
+                                <span>Total</span>
+                                <span>${(pinia?.classes !== undefined && !(Object.keys(pinia.classes).length === 0 && pinia.classes.constructor === Object)) ? (Object.keys(pinia.classes).length * 590 - (Object.keys(pinia.classes).length - 1) * 100) : 0}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
 export default PortalSummaryB;

@@ -32,14 +32,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'POST') {
         try {
             await new Promise<void>((resolve, reject) => {
-                upload.single('image')(req, res, (err: any) => {
+                upload.single('image')(req as any, res as any, (err: any) => {
                     console.log(err)
                     if (err instanceof multer.MulterError) {
                         return reject(err);
                     } else if (err) {
                         return reject(err);
                     }
-                    if (!req.file) {
+                    if (!(req as any).file) {
                         return reject(new Error('No file was uploaded.'));
                     }
 
@@ -47,8 +47,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
             });
 
-            res.status(200).json({ filename: req.file.filename });
-        } catch (error) {
+            res.status(200).json({ filename: (req as any).file.filename });
+        } catch (error:any) {
             res.status(400).json({ error: error.message });
         }
     } else {

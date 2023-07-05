@@ -11,3 +11,13 @@ body {
 html,body, #__next, #__next>div {
     height: 100%;    
 }
+
+@keyframes badgeflowing {
+    0% {top:0px;}
+    30% {top:0px;}
+    33% {top:-42px;}
+    63% {top:-42px;}
+    66% {top:-84px;}
+    96% {top:-84px;}
+    100% {top:-126px;}
+  }

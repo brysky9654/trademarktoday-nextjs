@@ -1,5 +1,7 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { BootstrapTooltip } from "../pages/classify";
+import { PiniaStore } from "@/store/store";
+import Image from "next/image";
 
 const WrapTimeBar = ({ showBar = true, children }: { showBar?: boolean, children: ReactNode }) => {
 
@@ -7,10 +9,11 @@ const WrapTimeBar = ({ showBar = true, children }: { showBar?: boolean, children
         <>
             <div className="flex gap-6">
                 <div className="flex flex-col items-center relative">
-                    <div className="w-6 h-6 leading-6 rounded-full border-2 border-[#72757E] bg-[#f2f2f6]"></div>
-                    {showBar && <div className="w-[2px] h-full absolute top-6 bg-[#C8CAD0]"></div>}
+                    {/* <div className="w-6 h-6 leading-6 rounded-full border-2 border-[#805357] bg-[#d1d1ff]"></div> */}
+                    <Image alt="image" loading='lazy' src='/down-circle.png' width={40} height={40} />
+                    {showBar && <div className="w-[2px] h-full absolute top-9 ml-[2px] bg-[#C8CAD0]"></div>}
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                     {children}
                 </div>
             </div>
@@ -35,12 +38,13 @@ const TimeBarA = ({ title, description, feeType, fee, tooltip, showBar = true }:
     )
 }
 export const TimeBarAs = () => {
+    const { pinia, setPinia } = useContext(PiniaStore);
     return (
         <div className="flex flex-col gap-4 p-8 max-w-[920px]">
-            <TimeBarA title="Today"
-                description="Submit your request. A non-refundable fee pays for a trade mark examiner to review your application. Within 5 business days you&apos;ll receive a confidential report with an early indication of whether it would be successful."
-                feeType="Submission fee"
-                fee="$400"
+            <TimeBarA title="Submit Application Today"
+                description="Takes 4-6 Months"
+                feeType="Total cost"
+                fee={`$${(pinia?.classes !== undefined && !(Object.keys(pinia.classes).length === 0 && pinia.classes.constructor === Object)) ? (Object.keys(pinia.classes).length * 590 - (Object.keys(pinia.classes).length - 1) * 100) : 0}`}
                 tooltip={
                     <>
                         <style>{`div.MuiTooltip-tooltip {width:240px; padding:16px;} p {font-size:16px; line-height:24px;}`}</style>
@@ -50,19 +54,19 @@ export const TimeBarAs = () => {
                     </>
                 }
             />
-            <TimeBarA title="After 5 days"
-                description="After receiving your report, you'll have 5 business days to make changes. If you decide to lodge your application, the lodgement fee is payable within the 5 days."
-                feeType="Lodgement fee"
-                fee="$260"
+            <TimeBarA title="Examination"
+                description="An Examiner from IP Australia will examiner your trade mark in accordance with Trade Marks Act 1995 (Cth).* "
                 tooltip={
                     <>
                         <style>{`div.MuiTooltip-tooltip {width:240px; padding:16px;} p {font-size:16px; line-height:24px;}`}</style>
-                        <p> Minor changes are usually free, however if you would like to change your request after receiving the report, fees may apply. In some cases, a reduced fee of $150 per class is applicable to change the trade mark name or appearance. The examiner will discuss your options. </p>
+                        <p> *Examination <br/>
+                            During the Examination period, the Examiner may issue an Adverse Examination Report. If an Adverse Report is issued, further costs will be incurred for reporting and filing a response. The costs can vary, depending on the type and number of objections.
+                        </p>
                     </>
                 }
             />
-            <TimeBarA title="7.5 months waiting period"
-                description="Once you pay, your trade mark is published on the Australian Register of Trade Marks where it enters an opposition period. During this time, you are protected unless challenged (less than 5% were challenged in 2021)."
+            <TimeBarA title="Acceptance"
+                description="After trade mark is placed for Acceptance, it will be published in the Australian Register of Trade Marks where it enters the Opposition period for two months."
                 tooltip={
                     <>
                         <style>{`div.MuiTooltip-tooltip {width:240px; padding:16px;} p {font-size:16px; line-height:24px;}`}</style>
@@ -73,7 +77,7 @@ export const TimeBarAs = () => {
                 }
             />
             <TimeBarA title="Registration" showBar={false}
-                description="If successful, your trade mark is registered for 10 years. Protection is backdated to your lodgement payment date, and you can display the &reg; symbol next to your trade mark."
+                description="If your trade mark is not opposed by a third party within the opposition period your trade mark proceeds to Registration. Your trade mark is registered for 10 years."
                 tooltip={
                     <>
                         <style>{`div.MuiTooltip-tooltip {width:240px; padding:16px;} p {font-size:16px; line-height:24px;}`}</style>

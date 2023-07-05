@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { ClassBadge } from "../pages/classify";
 import { PiniaStore } from "@/store/store";
 const MyCheckbox = ({ label, handleClick, id, checkedItems }: { label: string, handleClick: (_: { name: string, value: boolean, id: string }) => void, id: string, checkedItems: any[] }) => {
-    const { pinia, setPinia } = useContext(PiniaStore);
+    
     return (
         <FormControlLabel id={id} control={<Checkbox value={label} checked={checkedItems ? checkedItems.some(item => item.id === id) : false} onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleClick({
             name: label,

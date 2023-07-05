@@ -3,8 +3,8 @@ import ProgressPane from "./ProgressPane";
 export const TMCheckerElement = () => {
     return (
         <div id="page-header" className="flex gap-2 content-center">
-            <h3 className='font-mont leading-[28px] text-[18px]'>TM Checker</h3>
-            <div className='flex justify-center items-center bg-[#E0F3F4] px-2 py-1 rounded-sm font-bold text-[12px] leading-[18px]'><span>PILOT</span></div>
+            <h3 className='font-mont leading-[28px] text-[18px]'>Trade Mark Today</h3>
+            <div className='flex justify-center items-center bg-[#E0F3F4] px-2 py-1 rounded-sm font-bold text-[12px] leading-[18px]'><span>TM</span></div>
         </div>
     )
 }

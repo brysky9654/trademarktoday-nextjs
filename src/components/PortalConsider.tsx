@@ -14,7 +14,7 @@ const PortalConsider = ({ title, message, category, img = "" }: {
             </div>
             <div className="p-3 bg-[#f9f9f9] h-[72px]">
                 <div className="flex gap-3">
-                    <svg className='w-[25px] h-[25px] mt-1 stroke-[#ff832b] fill-none'><use href="#info"></use></svg>
+                    <Image alt="image" loading='lazy' src='/alert.png' width={45} height={45} style={{height:"45px"}} />
                     <div className={`flex ${img == "" ? "flex-col" : "flex-row"}`}>
                         <p className="text-[12px] uppercase leading-5 text-[#72757e]">Example</p>
                         {img === "" ?

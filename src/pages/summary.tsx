@@ -96,7 +96,7 @@ const Summary = () => {
                                 <hr />
                                 <div className="flex flex-col gap-3">
                                     <p className="uppercase text-[16px] leading-6">Help video</p>
-                                    <button onClick={() => alert()} className="flex gap-4 p-3 h-[46px] w-fit rounded-sm bg-white border border-black">
+                                    <button onClick={() => router.push('/select')} className="flex gap-4 p-3 h-[46px] w-fit rounded-sm bg-white border border-black">
                                         <Image alt="img" src="/play-video.svg" loading="lazy" width={24} height={20} />
                                         <h4 className="text-[14px] leading-6"> <strong>Distinctiveness</strong> (90 seconds)</h4>
                                     </button>
@@ -132,7 +132,7 @@ const Summary = () => {
                             <div className="flex flex-col gap-4 p-6 mt-4 border-t border-[#C8CAD0] bg-[#F9F9F9]">
                                 <div className="flex items-center justify-between">
                                     <h4 className="text-[16px] leading-7 font-mont">What to do</h4>
-                                    <button onClick={() => alert()} className="flex gap-4 px-4 justify-center items-center hover:bg-[#72757E] hover:text-white transition-all ease-in-out h-[46px] w-fit rounded-sm bg-white border border-black">
+                                    <button onClick={() => router.push('/select')} className="flex gap-4 px-4 justify-center items-center hover:bg-[#72757E] hover:text-white transition-all ease-in-out h-[46px] w-fit rounded-sm bg-white border border-black">
                                         <h4 className="text-[16px] leading-6 font-bold"> Edit my trademark </h4>
                                     </button>
                                 </div>
@@ -142,7 +142,8 @@ const Summary = () => {
                                     <li>Sound or pronunciation</li>
                                     <li>Goods or services</li>
                                 </div>
-                                <p>You can still apply if you feel like your trade mark is different enough.
+                                <p>You can still apply if you believe your trade mark and your goods and or services are distinguishable from those identified in the search result. 
+                                    <br/><br/>
                                     <Link href="#" className="underline p-1 hover:no-underline hover:bg-[#F2F2F6] font-bold" >
                                         Read more about similarity.
                                     </Link>
@@ -184,7 +185,7 @@ const Summary = () => {
                             Start again
                         </button>
                     </ConfirmStartAgainModal>
-                    <button onClick={() => router.push('/apply')} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#1D252C] w-[140px] h-[46px] text-white'>
+                    <button onClick={() => router.push('/apply')} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#373f86] w-[140px] h-[46px] text-white'>
                         Apply
                         <svg className='w-[17px] h-[17px] align-baseline inline-block stroke-white'><use href="#arrow-right"></use></svg>
                     </button>

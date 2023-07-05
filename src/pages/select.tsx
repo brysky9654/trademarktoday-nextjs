@@ -104,7 +104,10 @@ const Select = () => {
                     <ProgressIndicator stage={2} />
                     <section id="contentMain" className="grid grid-cols-12 gap-6">
                         <AlertErr showAlert={showAlert} msg={msg} />
-                        <h1 className="font-mont text-[32px] font-bold col-span-12">Which trade mark would you like to check?</h1>
+                        <h1 className="font-mont text-[32px] font-bold col-span-12">
+                            Ready to play trade mark detective? <br />
+                            Conduct a free preliminary search for your trade mark.
+                        </h1>
                         <Alert3 msg={
                             <>
                                 This initial automated check and trade mark application is for <b> Australia only </b>.
@@ -121,9 +124,9 @@ const Select = () => {
                                 </div>
                             </div>
                             <div className="flex justify-between py-2 px-4">
-                                <p className="text-[14px] leading-6 font-mont">Woolworths</p>
-                                <p className="text-[14px] leading-6 font-mont">Triple J</p>
-                                <p className="text-[14px] leading-6 font-mont">NBN</p>
+                                <p className="text-[14px] leading-6 font-mont">VEGEMITE</p>
+                                <p className="text-[14px] leading-6 font-mont">Coles</p>
+                                <p className="text-[14px] leading-6 font-mont">UGG</p>
                             </div>
                         </section>
                         <section onClick={() => setWordLogo('Logo')} className="col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
@@ -137,15 +140,15 @@ const Select = () => {
                                 </div>
                             </div>
                             <div className="flex justify-between py-2 px-4">
-                                <Image src="/ww-logo.png" loading="lazy" alt="Logo" width={45} height={40} />
-                                <Image src="/triple.png" loading="lazy" alt="Logo" width={45} height={40} />
-                                <Image src="/nbn.svg" loading="lazy" alt="Logo" width={80} height={40} />
+                                <Image src="/ww-logo.png" loading="lazy" alt="Logo" width={135} height={40} />
+                                <Image src="/triple.png" loading="lazy" alt="Logo" width={65} height={40} />
+                                <Image src="/nbn.png" loading="lazy" alt="Logo" width={40} height={40} />
                             </div>
                         </section>
                         {isWordLogo === "Word" ?
                             <section className="col-span-6 flex flex-col gap-2">
                                 <h3 className="text-[18px] font-mont leading-6">Enter word or phrase</h3>
-                                <span className="text-[14px] leading-6 text-[#72757e]">For example: Tim Tams</span>
+                                <span className="text-[14px] leading-6 text-[#72757e]">For example: Green Back</span>
                                 <input value={word} required onChange={e => setWord(e.target.value)} className={`h-16 px-5 py-3 bg-[#F5F6F7] border-b-2 ${word?.trim() === "" ? "border-red-600" : "border-black"}`} />
                                 {showAlert && (
                                     <span className="text-red-600 text-xs leading-6">Enter a word or phrase to continue.</span>
@@ -222,7 +225,7 @@ const Select = () => {
                         <svg className='w-[17px] h-[17px] align-baseline inline-block stroke-current'><use href="#arrow-left"></use></svg>
                         Back
                     </button>
-                    <button onClick={handleNextClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#1D252C] w-[140px] h-[46px] text-white'>
+                    <button onClick={handleNextClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#373f86] w-[140px] h-[46px] text-white'>
                         Next
                         <svg className='w-[17px] h-[17px] align-baseline inline-block stroke-white'><use href="#arrow-right"></use></svg>
                     </button>

@@ -62,10 +62,10 @@ export const ConfirmStartAgainModal = ({ openState: { open, setOpen }, children 
             {children}
             <ModalContainer openState={{ open, setOpen }} title="Clear search details?" msg="Starting again will clear your current trade mark and class selections." >
                 <div className='flex gap-4'>
-                    <button onClick={() => router.push('/select')} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out bg-[#1D252C] h-[46px] text-white'>
+                    <button onClick={() => router.push('/select')} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out bg-[#373f86] h-[46px] text-white'>
                         Yes, start again
                     </button>
-                    <button onClick={() => setOpen(false)} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out text-[#1D252C] h-[46px] bg-white border border-black hover:text-white'>
+                    <button onClick={() => setOpen(false)} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out text-[#373f86] h-[46px] bg-white border border-black hover:text-white'>
                         Cancel
                     </button>
                 </div>
@@ -82,7 +82,7 @@ export const ConfirmSignForApplyModal = ({ openState: { open, setOpen }, childre
             {children}
             <ModalContainer openState={{ open, setOpen }} title="Apply with your IP Australia account" msg="Doing so means you can manage your trade mark request and we can contact you later with any updates." >
                 <div className='flex gap-4'>
-                    <button onClick={() => router.push('/auth')} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out bg-[#1D252C] h-[46px] text-white'>
+                    <button onClick={() => router.push('/auth')} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out bg-[#373f86] h-[46px] text-white'>
                         Login
                     </button>
                     <button onClick={() => router.push('/auth')} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out text-[#1D252C] h-[46px] bg-white border border-black hover:text-white'>

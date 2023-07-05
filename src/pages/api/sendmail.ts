@@ -15,7 +15,7 @@ export default function handler(req: Request, res: Response): void {
             pass: 'czmlhgojnsphzisf'
         }
     });
-    const mailOptions:SendMailOptions = {
+    const mailOptions: SendMailOptions = {
         from: 'lightforest07020410@gmail.com',
         to: email as string,
         subject: 'Trademark today verfication',
@@ -30,10 +30,11 @@ export default function handler(req: Request, res: Response): void {
                 style="background:#252f3d;border-radius:3px 3px 0 0;max-width:600px">
                 <tbody>
                     <tr>
-                        <td style="background:brown;border-radius:3px 3px 0 0;padding:20px 0 10px 0;text-align:center">
-                            <img src="https://drive.google.com/uc?id=13IuZaowM8q9ec3CEKd4IYicXpOgYBg0r" width="75" height="45" alt="Syed logo" border="0"
+                        <td style="background:#373f86;border-radius:3px 3px 0 0;padding:10px;text-align:center; display:flex; justify-content:center; align-items:center;">
+                            <img src="http://trademarktoday.com.au/trademarktoday_logo.png" width="145" height="60" alt="Syed logo" border="0"
                                 style="font-family:sans-serif;font-size:15px;line-height:140%;color:#555555" class="CToWUd"
                                 data-bit="iit">
+                                <h3 style="margin:0; padding:0 20px; color:white; font-family:'Amazon Ember','Helvetica Neue',Roboto,Arial,sans-serif; font-style:italic;">Trade Mark Today</h3>
                         </td>
                     </tr>
                 </tbody>
@@ -49,7 +50,7 @@ export default function handler(req: Request, res: Response): void {
                             style="background-color:#fff;color:#444;font-family:'Amazon Ember','Helvetica Neue',Roboto,Arial,sans-serif;font-size:14px;line-height:140%;padding:25px 35px">
                             <h1 style="font-size:20px;font-weight:bold;line-height:1.3;margin:0 0 15px 0">Verify your email
                                 address</h1>
-                            <p style="margin:0;padding:0">Thanks for starting the new Trademarktoday account creation
+                            <p style="margin:0;padding:0">Thanks for starting the new <b>Trade Mark Today</b> account creation
                                 process. We want
                                 to make sure it's really you. Please enter the following verification code when prompted. If
                                 you don’t want to create an account, you can ignore this message.</p>
@@ -67,7 +68,7 @@ export default function handler(req: Request, res: Response): void {
                     <tr>
                         <td
                             style="background-color:#fff;border-top:1px solid #e0e0e0;color:#777;font-family:'Amazon Ember','Helvetica Neue',Roboto,Arial,sans-serif;font-size:14px;line-height:140%;padding:25px 35px">
-                            <p style="margin:0 0 15px 0;padding:0 0 0 0">Trademarktoday will never email you and ask
+                            <p style="margin:0 0 15px 0;padding:0 0 0 0">Trade Mark Today&trade; will never email you and ask
                                 you to disclose or verify your password, credit card, or banking account number.</p>
                         </td>
                     </tr>
@@ -81,10 +82,11 @@ export default function handler(req: Request, res: Response): void {
                     <tr>
                         <td
                             style="color:#777;font-family:'Amazon Ember','Helvetica Neue',Roboto,Arial,sans-serif;font-size:12px;line-height:16px;padding:20px 30px;text-align:center">
-                            This message was produced and distributed by Trademarktoday.com.au, Inc., Sydney, Australia. ©
-                            2022, Trademark Syed Mosawi, Inc.. All rights reserved. Trademarktoday Syed is not now a
-                            registered
-                            trademark of (TM),
+                            This message was produced and distributed by trademarktoday.com.au, Inc.,<br/> Sydney, Australia. ©
+                            2022, Trade Mark Today., Inc. <br/>All rights reserved. 
+                            Trade Mark Today is just now not a
+                            registered<br/>
+                            Trade Mark Today&trade;,
                             Inc. View our privacy policy
                         </td>
                     </tr>

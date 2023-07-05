@@ -33,13 +33,13 @@ const BottomCostBar = ({ show, near, setShowBottomCostBar }: { show: boolean, ne
     const { pinia, setPinia } = useContext(PiniaStore);
     return (
         <>
-            <div className={`z-10 transition-all ease-in-out duration-500 w-full flex items-center fixed ${show ? (near ? "-bottom-[78px]" : "bottom-0") : "-bottom-[150px]"} border-t-[5px] border-[#DE4326] bg-[#040c13]`}>
+            <div className={`z-10 transition-all ease-in-out duration-500 w-full flex items-center fixed ${show ? (near ? "-bottom-[78px]" : "bottom-0") : "-bottom-[200px]"} border-t-[5px] border-[#DE4326] bg-[#040818]`}>
                 <div className="w-full mt-4 mb-24 max-w-7xl mx-auto px-6 flex justify-between">
                     <div className="flex gap-4 items-center">
                         <h3 className="flex items-center justify-center font-mont text-[18px] leading-7 bg-[#30AEB6] rounded-full text-black w-11 h-11">{pinia.classes && Object.keys(pinia.classes).length}</h3>
                         <div className="flex flex-col text-white">
                             <h2 className="font-mont text-[24px] leading-9">classes selected</h2>
-                            <span className="text-[16px] leading-6">Total cost: <strong>${pinia.classes ? Object.keys(pinia.classes).length * 330 : 0}</strong></span>
+                            <span className="text-[16px] leading-6">Total cost: <strong>${pinia.classes ? (Object.keys(pinia.classes).length * 590 - (Object.keys(pinia.classes).length - 1) * 100) : 0}</strong></span>
                         </div>
                     </div>
                     <button onClick={() => setShowBottomCostBar(false)} className="text-[16px] transition-all ease-in-out leading-6 text-white bg-[#1D252C] h-12 px-4 rounded-lg hover:bg-[#72757E]">Ok</button>
@@ -119,7 +119,7 @@ const Classify = () => {
         setKeyword(e.target.value);
     }
     const handleRemoveClass = (id: string, classNo: string) => {
-        const p_classes = pinia.classes ? (pinia.classes[classNo] ? pinia.classes[classNo] : []) : []; console.log(p_classes);
+        const p_classes = pinia.classes ? (pinia.classes[classNo] ? pinia.classes[classNo] : []) : [];
         const tem_removeClasses = {
             ...pinia.classes,
             [classNo]: p_classes.filter(elem => elem.id !== id)
@@ -153,7 +153,7 @@ const Classify = () => {
                     <ProgressIndicator stage={3} />
                     <section id="contentMain" className="grid grid-cols-12 gap-6">
                         <AlertErr showAlert={showAlert} msg="Select at least one good or service to continue." />
-                        <h1 className="font-mont text-[32px] font-bold col-span-12">What goods or services do you provide?</h1>
+                        <h1 className="font-mont text-[32px] font-bold col-span-12">What goods and or services are associated with your trade mark?</h1>
                         <Alert2 msg={
                             <>
                                 <h4 className="text-[14px] leading-6">Goods or services relate to how your trade mark is protected.</h4>
@@ -183,12 +183,12 @@ const Classify = () => {
                                     </BootstrapTooltip>
 
                                 </div>
-                                <span className="text-[14px] leading-6 text-[#72757e]">Try different keywords and searches to uncover all relevant goods and services for your business.</span>
+                                <span className="text-[14px] leading-6 text-[#72757e]">Broadly select from the list of goods and or services you provide currently and intend to provide in the future.</span>
                                 <div className="flex gap-1 relative items-center">
                                     <input value={keyword} onChange={handleChange} placeholder="example: clothing for sports" className={`w-full h-16 px-5 py-3 bg-[#F5F6F7] border-b-2 "border-black"`} />
-                                    <button className="flex flex-col justify-center absolute items-center right-0 w-12 h-12 hover:bg-[#C8CAD0] border-black hover:border rounded-md">
+                                    {keyword?.trim() !== '' && <button onClick={() => setKeyword('')} className="flex flex-col justify-center absolute items-center right-0 w-12 h-12 hover:bg-[#C8CAD0] border-black hover:border rounded-md">
                                         <svg className='self-center w-[10px] h-[10px] align-baseline inline-block stroke-black'><use href="#x"></use></svg>
-                                    </button>
+                                    </button>}
                                     <CircularProgress hidden={!showWaiting} className={`absolute right-14`} color="secondary" />
                                 </div>
 
@@ -227,14 +227,14 @@ const Classify = () => {
                                         </div>
                                         <div className="flex justify-between w-full pt-4 pr-2">
                                             <ClassBadge text={classKey} />
-                                            $330
+                                            {index > 0 ? <div><span className="line-through decoration-2 decoration-black text-red-500 font-bold pr-4">$590</span>$490</div> : <span>$590</span>}
                                         </div>
                                         <hr />
                                     </div>
                                 ))}
                                 <div className="flex justify-between w-full px-2 py-4 mt-4 bg-[#f2f2f6] text-[16px] font-bold">
                                     <span>Total</span>
-                                    <span>${pinia.classes ? Object.keys(pinia.classes).length * 330 : 0}</span>
+                                    <span>${(pinia?.classes !== undefined && !(Object.keys(pinia.classes).length === 0 && pinia.classes.constructor === Object)) ? (Object.keys(pinia.classes).length * 590 - (Object.keys(pinia.classes).length - 1) * 100) : 0}</span>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4 bg-[#e0f3f4] p-4">
@@ -263,7 +263,7 @@ const Classify = () => {
                         <svg className='w-[17px] h-[17px] align-baseline inline-block stroke-[#1D252C]'><use href="#arrow-left"></use></svg>
                         Back
                     </button>
-                    <button onClick={handleNextClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#1D252C] w-[140px] h-[46px] text-white'>
+                    <button onClick={handleNextClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-between gap-4 items-center px-4 ease-in-out bg-[#373f86] w-[140px] h-[46px] text-white'>
                         Next
                         <svg className='w-[17px] h-[17px] align-baseline inline-block stroke-white'><use href="#arrow-right"></use></svg>
                     </button>

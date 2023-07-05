@@ -19,11 +19,11 @@ export const AlertErr = ({ showAlert, msg }: { showAlert: boolean, msg: string }
         </section>
     )
 }
-export const Alert2 = ({msg}:{msg:ReactNode}) => {
+export const Alert2 = ({ msg }: { msg: ReactNode }) => {
     return (
         <section id="alert-container" className="col-span-12">
-            <div className="bg-[#E0F3F4] p-4 shadow-[4px_0_#30aeb6_inset] flex gap-2">
-                <svg className='w-6 h-6 align-baseline inline-block stroke-none fill-[#30aeb6]'><use href="#info-circle-filled"></use></svg>
+            <div className="bg-[#E0F3F4] p-4 shadow-[4px_0_#30aeb6_inset] flex gap-2 items-center">
+                <Image alt="image" loading='lazy' src='/alert.png' width={45} height={45} style={{ height: "45px" }} />
                 <div className="flex flex-col gap-2">
                     <h2 className="text-[16px] leading-6 font-bold">What you need to know</h2>
                     {msg}
@@ -35,8 +35,8 @@ export const Alert2 = ({msg}:{msg:ReactNode}) => {
 export const Alert3 = ({ msg }: { msg: ReactNode }) => {
     return (
         <section id="alert-container" className="col-span-12">
-            <div className="bg-[#E0F3F4] p-4 shadow-[4px_0_#30aeb6_inset] flex gap-2">
-                <svg className='w-6 h-6 align-baseline inline-block stroke-none fill-[#30aeb6]'><use href="#info-circle-filled"></use></svg>
+            <div className="bg-[#E0F3F4] p-4 shadow-[4px_0_#30aeb6_inset] flex gap-2 items-center">
+                <Image alt="image" loading='lazy' src='/alert.png' width={45} height={45} style={{ height: "45px" }} />
                 <h4 className="text-[14px] leading-6">{msg}</h4>
             </div>
         </section>
@@ -45,11 +45,11 @@ export const Alert3 = ({ msg }: { msg: ReactNode }) => {
 export const Alert4 = () => {
     return (
         <section id="alert-container" className={`col-span-12`}>
-            <div className="bg-[#FFF0E5] p-4 shadow-[4px_0_#ff832b_inset] flex gap-2">
-                <svg className='w-6 h-6 align-baseline inline-block stroke-none fill-[#ff832b]'><use href="#warning-circle"></use></svg>
+            <div className="bg-[#FFF0E5] p-4 shadow-[4px_0_#ff832b_inset] flex gap-2 items-center">
+                <Image alt="image" loading='lazy' src='/alert.png' width={45} height={45} style={{ height: "45px" }} />
                 <div className="flex flex-col gap-2">
                     <h4 className="text-[16px] font-bold">Important</h4>
-                    <p className="text-[14px] leading-6">Our automated check has flagged some potential issues you should consider.</p>
+                    <p className="text-[14px] leading-6">Our automated search has found trade marks that you may consider before proceeding.</p>
                 </div>
             </div>
         </section>
