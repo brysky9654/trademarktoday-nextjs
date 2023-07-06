@@ -58,3 +58,8 @@ export interface PiniaContextType {
   pinia: PiniaType;
   setPinia: (_: {}) => void;
 }
+export type Message = {
+  channel:string
+  author: string;
+  message: string;
+};

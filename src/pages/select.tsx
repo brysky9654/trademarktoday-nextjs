@@ -76,7 +76,7 @@ const Select = () => {
     }
 
     const handleNextClick = () => {
-        if ((isWordLogo === "Word" && word?.trim() !== '') ||
+        if ((isWordLogo === "Word" && word !==undefined && word.trim() !== '') ||
             (isWordLogo === "Logo" && imageDataUrl?.trim() !== '' && (!wordContained || (containedWord !== undefined && containedWord.trim() !== '')))) {
             setWaiting(true);
             setTimeout(() => {

@@ -28,7 +28,6 @@ export default async function handler(req: Request, res: Response) {
         elem.product.sort((a: any, b: any) => (b.score - a.score))
       })
       arr_products.sort((a:any,b:any)=>(b.product[0].score-a.product[0].score));
-console.log(arr_products[0].product[0])
 
       // interface GroupedProduct {
       //   [key: string]: { product: string; class: string }[];

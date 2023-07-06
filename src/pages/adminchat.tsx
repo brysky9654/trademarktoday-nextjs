@@ -7,26 +7,25 @@ import Image from 'next/image';
 import PortalClass from '@/components/PortalClass';
 import UserInfoAvatar from '@/components/UserInfoAvatar';
 import Chat from '@/components/Chat';
-const Dashboard = ({ user }: { user: User }) => {
+import ChatAdmin from '@/components/ChatAdmin';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+const AdminChat = ({ user }: { user: User }) => {
 
+  const router = useRouter();
+  useEffect(() => {
+    if (user.email !== 'milkyway464203@gmail.com') {
+      router.push('/auth');
+    }
+  }, [])
   return (
     <>
       {user && <UserInfoAvatar user={user} />}
-      <main className='max-w-7xl mx-auto px-6 py-4'>
-        <div className="grid gap-y-6">
-          <h1 className='font-mont text-3xl'>Dashboard Test</h1>
 
-          <Alert3 msg={
-            <>
-              This page is only for testing purpose. <strong>You can see this page because you have logged in.</strong>
-            </>
-          } />
-          <Chat username={user.name} />
-        </div>
-      </main>
+      <ChatAdmin />
     </>
   )
 }
-Dashboard.getLayout = TMCheckLayout;
+AdminChat.getLayout = TMCheckLayout;
 export const getServerSideProps = ServerSideProps;
-export default Dashboard;
+export default AdminChat;
