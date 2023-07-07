@@ -21,7 +21,7 @@ const Dashboard = ({ user }: { user: User }) => {
               This page is only for testing purpose. <strong>You can see this page because you have logged in.</strong>
             </>
           } />
-          <Chat username={user.name} />
+          <Chat/>
         </div>
       </main>
     </>

@@ -1,9 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { Request, Response } from "express";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { admin_name } from "@/components/Chat";
-
-let channels: string[] = [];
+let channels: { channel: string, username: string }[] = [];
 export default function SocketHandler(req: any, res: any) {
   // It means that socket server was already initialised
   if (res.socket.server.io) {
@@ -20,22 +18,31 @@ export default function SocketHandler(req: any, res: any) {
     // const channels: string[] = JSON.parse(_chanelArr as string);
 
     //! here to handle START
-    const createdMessage = ({ channel, author, message }: { channel: string, author: string, message: string }) => {
+    socket.on("createdMessage", ({ channel, author, message }: { channel: string, author: string, message: string }) => {
       socket.to(channel).emit(`newIncomingMessage`, { channel, author, message });
-    };
-
-    socket.on("createdMessage", createdMessage);
+    });
+    socket.on('typing', ({ channel, author, message }: { channel: string, author: string, message: 'start' | 'end' }) => {
+      socket.to(channel).emit(`newIncomingTyping`, { channel, author, message });
+    })
+    socket.on('viewed', ({ channel, author, message }: { channel: string, author: string, message: string }) => {
+      socket.to(channel).emit(`newIncomingViewed`, { channel, author, message });
+    })
+    socket.on('repeatMsg', ({ channel, author, message }: { channel: string, author: string, message: string }) => {
+      socket.to(channel).emit(`newIncomingRepeatMsg`, { channel, author, message });
+    })
     socket.on('joinChannel', ({ channel, username }) => {
       socket.join(channel);
-      channels = Array.from(new Set([...channels, channel])); // Add channel to the list only if it's not already present
+      if (username !== 'admin' && !(new Set(channels.map(chs => chs.channel))).has(channel)) {
+        channels = Array.from(new Set([...channels, { channel, username }])); // Add channel to the list only if it's not already present
+      }
       if (username !== 'admin') {
         socket.to('admin').emit(`channelCreated`, { channel, username })
       }
       // io.emit('updateChannels', channels); // Notify all clients about the updated channel list
-      if(username === 'admin_initial') {
+      if (username === 'admin_initial') {
         // socket.to('admin').emit(`updateChannels`, channels)
         console.log(channels);
-        channels.filter(chn => chn !== 'admin').forEach(chn => io.emit(`channelCreated`, { channel: chn, username: chn }))
+        channels.filter(chn => chn.channel !== 'admin').forEach(chn => io.emit(`channelCreated`, { channel: chn.channel, username: chn.username }))
       }
       console.log('rooms', socket.rooms);
     });

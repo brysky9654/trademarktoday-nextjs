@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import TMCheckLayout from "../layout/TMCheckLayout";
+import Chat from "@/components/Chat";
 
 const Start = () => {
   const router = useRouter();
@@ -57,6 +58,7 @@ const Start = () => {
           <button onClick={handleClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all ease-in-out bg-[#373f86] w-72 h-12 text-white'>Start</button>
         </div>
       </section>
+      <Chat />
       <div id="start-back-image" className='flex fixed right-0 bottom-0 items-end justify-end -z-10'>
         <Image className='max-h-screen' alt="image" loading='lazy' layout='responsive' src="/back-start-2.jpg" width={1250} height={10} />
       </div>

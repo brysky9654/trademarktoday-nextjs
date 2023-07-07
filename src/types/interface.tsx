@@ -62,4 +62,5 @@ export type Message = {
   channel:string
   author: string;
   message: string;
+  viewed?:boolean
 };

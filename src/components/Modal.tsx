@@ -6,7 +6,7 @@ import { setCookie } from 'nookies';
 import { JWT_SIGN_KEY, hash } from '@/types/utils';
 import Modal from '@mui/material/Modal';
 import { useRouter } from 'next/router';
-import { OTPStore } from '@/store/store';
+import { OTPStore, PiniaStore } from '@/store/store';
 import axios from 'axios';
 
 type ModalType = {
@@ -54,15 +54,20 @@ const ModalContainer = ({ openState: { open, setOpen }, children, title, msg }: 
 
 
 export const ConfirmStartAgainModal = ({ openState: { open, setOpen }, children }: ModalType) => {
+    const { pinia, setPinia } = React.useContext(PiniaStore);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const router = useRouter();
+    const handleStartAgain = () => {
+        setPinia({});
+        router.push('/select')
+    }
     return (
         <div>
             {children}
             <ModalContainer openState={{ open, setOpen }} title="Clear search details?" msg="Starting again will clear your current trade mark and class selections." >
                 <div className='flex gap-4'>
-                    <button onClick={() => router.push('/select')} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out bg-[#373f86] h-[46px] text-white'>
+                    <button onClick={handleStartAgain} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out bg-[#373f86] h-[46px] text-white'>
                         Yes, start again
                     </button>
                     <button onClick={() => setOpen(false)} className='rounded-md w-full font-semibold hover:bg-[#72757E] transition-all flex justify-center gap-4 items-center ease-in-out text-[#373f86] h-[46px] bg-white border border-black hover:text-white'>
@@ -108,7 +113,7 @@ export const OTPModal = ({ openState: { open, setOpen }, setMsg }: { openState: 
                 path: '/',
             });
             router.push('/dashboard');
-        } else {            
+        } else {
             setMsg("Verification code not matching")
             setOpen(true);
         }

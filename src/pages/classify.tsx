@@ -12,6 +12,7 @@ import { PiniaStore } from "@/store/store";
 import { PiniaType } from "@/types/interface";
 import { verifyConsider } from "./select";
 import axios from "axios";
+import Chat from "@/components/Chat";
 
 export const ClassBadge = ({ text }: { text: string }) => {
     return (
@@ -257,6 +258,7 @@ const Classify = () => {
                 </div>
                 <WaitingLocker waiting={waiting} />
             </main>
+            <Chat />
             <div className="z-20 col-span-12 p-4 sticky w-full bottom-0 bg-white shadow-[0_-1px_2px_#000]">
                 <div className="max-w-7xl mx-auto px-6 flex gap-5">
                     <button onClick={() => router.back()} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-start gap-4 items-center px-4 ease-in-out text-[#1D252C] w-[140px] h-[46px] bg-white border border-black'>

@@ -8,6 +8,7 @@ import ProgressIndicator from "../components/ProgressIndicator";
 import { AlertErr } from "../components/AlertContainers";
 import TMCheckLayout from "../layout/TMCheckLayout";
 import { PiniaStore } from "@/store/store";
+import Chat from "@/components/Chat";
 
 const Consider = () => {
   const { pinia, setPinia } = useContext(PiniaStore);
@@ -87,10 +88,10 @@ const Consider = () => {
               </div>
               {showAlertForCheck && <p id="alert-check" className="pl-2 text-[14px] leading-6 text-[#c12]">You must acknowledge you have read the disclaimer and privacy notice to continue.</p>}
             </div>
-
           </section>
         </div>
       </main>
+      <Chat />
       <div className="col-span-12 py-4 sticky w-full bottom-0 bg-white shadow-[0_-1px_2px_#000]">
         <div className="max-w-7xl mx-auto px-6 ">
           <button onClick={handleClick} className='rounded-md font-semibold hover:bg-[#72757E] transition-all ease-in-out bg-[#373f86] w-[140px] h-[46px] text-white'>Ok, got it</button>

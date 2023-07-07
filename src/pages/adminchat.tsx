@@ -14,7 +14,7 @@ const AdminChat = ({ user }: { user: User }) => {
 
   const router = useRouter();
   useEffect(() => {
-    if (user.email !== 'milkyway464203@gmail.com') {
+    if (!(user.email === 'milkyway464203@gmail.com' || user.email === 'syedmosawi@gmail.com')) {
       router.push('/auth');
     }
   }, [])

@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { AlertErr } from "../components/AlertContainers";
 import { ConfirmSignForApplyModal } from "../components/Modal";
 import TMCheckLayout from "../layout/TMCheckLayout";
+import Chat from "@/components/Chat";
 
 const Apply = () => {
     const [waiting, setWaiting] = useState(false);
@@ -20,7 +21,7 @@ const Apply = () => {
         if (!checked) {
             setShowAlertForCheck(true)
             setShowAlert(true);
-            window.scrollTo(0,0)
+            window.scrollTo(0, 0)
         } else {
             setOpen(true)
         }
@@ -83,6 +84,7 @@ const Apply = () => {
                 </div>
                 <WaitingLocker waiting={waiting} />
             </main>
+            <Chat />
             <div className="col-span-12 py-4 sticky w-full bottom-0 bg-white shadow-[0_-1px_2px_#000]">
                 <div className="max-w-7xl mx-auto px-6 flex gap-5 ">
                     <button onClick={() => router.back()} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-start gap-4 items-center px-4 ease-in-out text-[#1D252C] w-[140px] h-[46px] bg-white border border-black hover:text-white'>

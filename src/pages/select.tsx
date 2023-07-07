@@ -10,6 +10,7 @@ import { AlertErr, Alert3 } from "../components/AlertContainers";
 import TMCheckLayout from "../layout/TMCheckLayout";
 import { PiniaStore } from "@/store/store";
 import { PiniaType } from "@/types/interface";
+import Chat from "@/components/Chat";
 export const verifyConsider = (pinia: PiniaType): boolean => {
     return (pinia?.acceptedTerms as boolean);
 }
@@ -76,7 +77,7 @@ const Select = () => {
     }
 
     const handleNextClick = () => {
-        if ((isWordLogo === "Word" && word !==undefined && word.trim() !== '') ||
+        if ((isWordLogo === "Word" && word !== undefined && word.trim() !== '') ||
             (isWordLogo === "Logo" && imageDataUrl?.trim() !== '' && (!wordContained || (containedWord !== undefined && containedWord.trim() !== '')))) {
             setWaiting(true);
             setTimeout(() => {
@@ -145,7 +146,7 @@ const Select = () => {
                                 <Image src="/nbn.png" loading="lazy" alt="Logo" width={40} height={40} />
                             </div>
                         </section>
-                        {isWordLogo === "Word" ?
+                        {isWordLogo === "Word" &&
                             <section className="col-span-6 flex flex-col gap-2">
                                 <h3 className="text-[18px] font-mont leading-6">Enter word or phrase</h3>
                                 <span className="text-[14px] leading-6 text-[#72757e]">For example: Green Back</span>
@@ -153,8 +154,10 @@ const Select = () => {
                                 {showAlert && (
                                     <span className="text-red-600 text-xs leading-6">Enter a word or phrase to continue.</span>
                                 )}
-                            </section> :
-                            (<>
+                            </section>
+                        }
+                        {isWordLogo === "Logo" &&
+                            <>
                                 <section className="col-span-12 flex flex-col gap-5">
                                     <h3 className="text-[18px] font-mont leading-7">Upload image</h3>
                                     <div className="flex flex-col shadow-[0_2px_10px_#00000040] rounded-lg">
@@ -214,11 +217,13 @@ const Select = () => {
                                         </section>
                                     </>}
                                 </section>
-                            </>)}
+                            </>
+                        }
                     </section>
                 </div>
                 <WaitingLocker waiting={waiting} />
             </main>
+            <Chat />
             <div className="col-span-12 py-4 sticky w-full bottom-0 bg-white shadow-[0_-1px_2px_#000]">
                 <div className="max-w-7xl mx-auto px-6 flex gap-5 ">
                     <button onClick={() => router.back()} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-start gap-4 items-center px-4 ease-in-out text-[#1D252C] w-[140px] h-[46px] bg-white border border-black hover:text-white'>

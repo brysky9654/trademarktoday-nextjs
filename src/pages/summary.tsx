@@ -10,6 +10,7 @@ import { ConfirmStartAgainModal } from "../components/Modal";
 import { Alert2, Alert4 } from "../components/AlertContainers";
 import TMCheckLayout from "../layout/TMCheckLayout";
 import { PiniaStore } from "@/store/store";
+import Chat from "@/components/Chat";
 
 const CardContainer = ({ children }: { children: ReactNode }) => {
     return (
@@ -142,8 +143,8 @@ const Summary = () => {
                                     <li>Sound or pronunciation</li>
                                     <li>Goods or services</li>
                                 </div>
-                                <p>You can still apply if you believe your trade mark and your goods and or services are distinguishable from those identified in the search result. 
-                                    <br/><br/>
+                                <p>You can still apply if you believe your trade mark and your goods and or services are distinguishable from those identified in the search result.
+                                    <br /><br />
                                     <Link href="#" className="underline p-1 hover:no-underline hover:bg-[#F2F2F6] font-bold" >
                                         Read more about similarity.
                                     </Link>
@@ -173,6 +174,7 @@ const Summary = () => {
                 </div>
                 <WaitingLocker waiting={waiting} />
             </main>
+            <Chat />
             <div className="col-span-12 py-4 sticky w-full bottom-0 bg-white shadow-[0_-1px_2px_#000]">
                 <div className="max-w-7xl mx-auto px-6 flex gap-5 ">
                     <button onClick={() => router.back()} className='rounded-md font-semibold hover:bg-[#72757E] transition-all flex justify-start gap-4 items-center px-4 ease-in-out text-[#1D252C] w-[140px] h-[46px] bg-white border border-black hover:text-white'>
