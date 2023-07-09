@@ -73,7 +73,10 @@ const Classify = () => {
         })();
     }, [])
     useEffect(() => {
-        if (Object.keys(pinia).length === 0 && pinia.constructor === Object) return;
+        if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
+            router.push('/consider')
+            return;
+        }
         setShowBottomCostBar(pinia.classes !== undefined && Object.keys(pinia.classes).length > 0)
         if (!verifyConsider(pinia)) {
             router.push('/consider')

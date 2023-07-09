@@ -29,7 +29,10 @@ const Select = () => {
     const [containedWord, setContainedWord] = useState(pinia?.containedWord as string);
     const [imageDataUrl, setImageDataUrl] = useState(pinia?.logo);
     useEffect(() => {
-        if (Object.keys(pinia).length === 0 && pinia.constructor === Object) return;
+        if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
+            router.push('/consider')
+            return;
+        }
         setWordLogo(pinia?.markType)
         setWord(pinia?.word)
         setWordContained(pinia?.wordContained as boolean)

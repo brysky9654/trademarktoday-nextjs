@@ -8,8 +8,9 @@ export const initialState: StateType = {
         email: '',
         name: '',
         password: '',
-        given_name: '',
-        family_name: ''
+        ACN: '',
+        address: '',
+        phone_number: ''
     }
 }
 export const OTPStore = createContext<ContextType>({

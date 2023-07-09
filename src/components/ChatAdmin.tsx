@@ -2,11 +2,14 @@ import io, { Socket } from "socket.io-client";
 import { useState, useEffect, KeyboardEvent, useRef } from "react";
 import { Message } from "@/types/interface";
 import Image from "next/image";
+import { generateRandomKey } from "@/types/utils";
 let socket: Socket;
 export default function ChatAdmin() {
-    const [message, setMessage] = useState("");
-    const [curChannel, setCurChannel] = useState('');
-    const [messages, setMessages] = useState<{ [key: string]: Array<Message> }>({});//[{ author: 'Chatbot', message: 'Start chat here.' }]
+    const [message, setMessage] = useState('');
+    const [messagesAndCurChannel, setMessagesAndCurChannel] = useState<{ messages: { [key: string]: Array<Message> }, curChannel: string }>({
+        messages: {},
+        curChannel: ''
+    });//[{ author: 'Chatbot', message: 'Start chat here.' }]
     const chatWindow = useRef<HTMLDivElement>(null);
 
     const [channels, setChannels] = useState<{ name: string, unreadCount: number, displayName: string, typing?: boolean }[]>([]);
@@ -20,23 +23,25 @@ export default function ChatAdmin() {
         };
     }, []);
     const handleNewIncomingMessage = (msg: Message) => {
-        socket.emit("repeatMsg", { channel: msg.channel, author: msg.author, message: msg.message })
-        if (curChannel !== msg.channel) {
-            setChannels(prev => {
-                prev = prev.map(chn => (chn.name !== msg.channel ? chn : ({ name: chn.name, unreadCount: chn.unreadCount + 1, displayName: chn.displayName })));
-                prev.sort((a, b) => b.unreadCount - a.unreadCount);
-                return prev;
-            })
-        } else {
-            socket.emit("viewed", { channel: curChannel, author: 'Trademarktoday agent', message: 'viewed' })
-        }
-        setMessages((currentMsg) => {
-            const prev_msg = (currentMsg && currentMsg[msg.channel]) ? currentMsg[msg.channel] : []
-            return {
-                ...currentMsg,
-                [msg.channel]: [...prev_msg, { author: msg.author, message: msg.message, channel: msg.channel, viewed: false }]
+        socket.emit("repeatMsg", { channel: msg.channel, author: msg.author, message: msg.message, key: msg.key })
+        setMessagesAndCurChannel((currentMsgsAndCurChannel) => {
+            if (currentMsgsAndCurChannel.curChannel !== msg.channel) {
+                setChannels(prev => {
+                    prev = prev.map(chn => (chn.name !== msg.channel ? chn : ({ name: chn.name, unreadCount: chn.unreadCount + 1, displayName: chn.displayName })));
+                    prev.sort((a, b) => b.unreadCount - a.unreadCount);
+                    return prev;
+                })
+            } else {
+                socket.emit("viewed", { channel: currentMsgsAndCurChannel.curChannel, author: 'Trademarktoday agent', message: 'viewed' })
             }
-        });
+            const prev_msg = (currentMsgsAndCurChannel.messages && currentMsgsAndCurChannel.messages[msg.channel]) ? currentMsgsAndCurChannel.messages[msg.channel] : []
+            return {
+                ...currentMsgsAndCurChannel,
+                messages: {
+                    ...currentMsgsAndCurChannel.messages, [msg.channel]: [...prev_msg, { author: msg.author, message: msg.message, channel: msg.channel, viewed: false, key: msg.key }]
+                }
+            }
+        })
     }
     const handleChannelCreated = ({ channel: chn, username }: { channel: string, username: string }) => {
         console.log(channels, chn)
@@ -47,50 +52,72 @@ export default function ChatAdmin() {
             }
             return prevChannels;
         });
-        if (chn && curChannel.trim() === '') {
-            setCurChannel(chn)
-        }
+        setMessagesAndCurChannel((currentMsgsAndCurChannel) => {
+            return {
+                ...currentMsgsAndCurChannel,
+                curChannel: (chn && currentMsgsAndCurChannel.curChannel.trim() === '') ? chn : currentMsgsAndCurChannel.curChannel
+            }
+        })
+
     }
     const handleNewIncomingTyping = ({ channel, author, message }: Message) => {
         setChannels(prev => prev.map(chn => (chn.name !== channel ? chn : ({ ...chn, typing: message === 'start' }))))
     }
     const handleNewIncomingViewed = ({ channel, author, message }: Message) => {
-        setMessages((currentMsg) => {
-            const prev_msg = (currentMsg && currentMsg[channel]) ? currentMsg[channel] : []
+        setMessagesAndCurChannel((currentMsgsAndCurChannel) => {
+            const prev_msg = (currentMsgsAndCurChannel.messages && currentMsgsAndCurChannel.messages[channel]) ? currentMsgsAndCurChannel.messages[channel] : []
             return {
-                ...currentMsg,
-                [channel]: [...prev_msg.map(msg => ({ ...msg, viewed: true }))]
+                ...currentMsgsAndCurChannel,
+                messages: {
+                    ...currentMsgsAndCurChannel.messages, [channel]: [...prev_msg.map(msg => ({ ...msg, viewed: true }))]
+                }
             }
         });
     }
-    const handleNewIncomingRepeatMsg = (msg: Message) => {
-        setMessages((currentMsg) => {
-            const prev_msg = (currentMsg && currentMsg[curChannel]) ? currentMsg[curChannel] : []
+    const handleNewIncomingRepeatMsg = ({ key }: Message) => {
+        setMessagesAndCurChannel((currentMsgsAndCurChannel) => {
+            const prev_msg = (currentMsgsAndCurChannel.messages && currentMsgsAndCurChannel.messages[currentMsgsAndCurChannel.curChannel]) ? currentMsgsAndCurChannel.messages[currentMsgsAndCurChannel.curChannel] : []
             return {
-                ...currentMsg,
-                [curChannel]: [...prev_msg, { author: 'admin', message: msg.message, channel: 'admin' }]
+                ...currentMsgsAndCurChannel,
+                messages: {
+                    ...currentMsgsAndCurChannel.messages,
+                    [currentMsgsAndCurChannel.curChannel]: prev_msg.map(msg => (msg.key === key ? { ...msg, deliveredToClient: true } : msg))
+                }
+
             }
         });
-        setMessage("");
     }
-    useEffect(() => {
-        if (socket) {
-            socket.on("channelCreated", handleChannelCreated);
-            socket.on("newIncomingMessage", handleNewIncomingMessage);
-            socket.on('newIncomingTyping', handleNewIncomingTyping)
-            socket.on('newIncomingViewed', handleNewIncomingViewed)
-            socket.on("newIncomingRepeatMsg", handleNewIncomingRepeatMsg);
-        }
-        // Clean up the event listener when curChannel changes or component unmounts
-        return () => {
-            if (!socket) return;
-            socket.off("channelCreated", handleChannelCreated);
-            socket.off("newIncomingMessage", handleNewIncomingMessage);
-            socket.off('newIncomingTyping', handleNewIncomingTyping)
-            socket.off('newIncomingViewed', handleNewIncomingViewed)
-            socket.off("newIncomingRepeatMsg", handleNewIncomingRepeatMsg);
-        };
-    }, [curChannel, channels])
+    const handleDeliveredToserver = ({ key }: Message) => {
+        setMessagesAndCurChannel((currentMsgsAndCurChannel) => {
+            const prev_msg = (currentMsgsAndCurChannel.messages && currentMsgsAndCurChannel.messages[currentMsgsAndCurChannel.curChannel]) ? currentMsgsAndCurChannel.messages[currentMsgsAndCurChannel.curChannel] : []
+            return {
+                ...currentMsgsAndCurChannel,
+                messages: {
+                    ...currentMsgsAndCurChannel.messages,
+                    [currentMsgsAndCurChannel.curChannel]: prev_msg.map(msg => (msg.key === key ? { ...msg, deliveredToServer: true } : msg))
+                }
+
+            }
+        });
+    }
+    // useEffect(() => { //! Check this section.
+    //     if (socket) {
+    //         socket.on("channelCreated", handleChannelCreated);
+    //         socket.on("newIncomingMessage", handleNewIncomingMessage);
+    //         socket.on('newIncomingTyping', handleNewIncomingTyping)
+    //         socket.on('newIncomingViewed', handleNewIncomingViewed)
+    //         socket.on("newIncomingRepeatMsg", handleNewIncomingRepeatMsg);
+    //     }
+    //     // Clean up the event listener when curChannel changes or component unmounts
+    //     return () => {
+    //         if (!socket) return;
+    //         socket.off("channelCreated", handleChannelCreated);
+    //         socket.off("newIncomingMessage", handleNewIncomingMessage);
+    //         socket.off('newIncomingTyping', handleNewIncomingTyping)
+    //         socket.off('newIncomingViewed', handleNewIncomingViewed)
+    //         socket.off("newIncomingRepeatMsg", handleNewIncomingRepeatMsg);
+    //     };
+    // }, [curChannel, channels])
     const socketInitializer = async () => {
         // We just call it because we don't need anything else out of it
         await fetch(`/api/chatsocket`); // Pass the channel as a query parameter
@@ -98,9 +125,11 @@ export default function ChatAdmin() {
 
         socket = io();//io({ query: { channel: JSON.stringify(channels) } }); // Pass the channel as a query parameter when initializing the socket connection
         socket.on("channelCreated", handleChannelCreated);
-        // socket.on("newIncomingMessage", handleNewIncomingMessage);
-        // socket.on('newIncomingTyping', handleNewIncomingTyping)
-        // socket.on('newIncomingViewed', handleNewIncomingViewed)
+        socket.on("newIncomingMessage", handleNewIncomingMessage);
+        socket.on('deliveredToSerer', handleDeliveredToserver)
+        socket.on('newIncomingTyping', handleNewIncomingTyping)
+        socket.on('newIncomingViewed', handleNewIncomingViewed)
+        socket.on("newIncomingRepeatMsg", handleNewIncomingRepeatMsg)
         socket.emit('joinChannel', { channel: 'admin', username: 'admin_initial' });
         socket.on('updateChannels', (updatedChannels: string[]) => {
             // setChannels(updatedChannels.map(chn => ({ name: chn, unreadCount: 0 })));
@@ -112,33 +141,40 @@ export default function ChatAdmin() {
 
     };
     useEffect(() => {
-        if ((channels.find(chn => chn.name === curChannel)?.unreadCount as number) > 0) {
-            socket.emit("viewed", { channel: curChannel, author: 'Trademarktoday agent', message: 'viewed' })
+        if ((channels.find(chn => chn.name === messagesAndCurChannel.curChannel)?.unreadCount as number) > 0) {
+            socket.emit("viewed", { channel: messagesAndCurChannel.curChannel, author: 'Trademarktoday agent', message: 'viewed' })
         }
-        setChannels(prev => prev.map(chn => (chn.name !== curChannel ? chn : ({ ...chn, unreadCount: 0 }))))
-    }, [curChannel])
+        setChannels(prev => prev.map(chn => (chn.name !== messagesAndCurChannel.curChannel ? chn : ({ ...chn, unreadCount: 0 }))))
+    }, [messagesAndCurChannel])
     useEffect(() => {
         if (chatWindow.current) {
             chatWindow.current.scrollTop = chatWindow.current.scrollHeight;
         }
-    }, [messages, curChannel])
+    }, [messagesAndCurChannel])
     const sendMessage = async () => {
         if (message.trim() === '') return;
         // channels.filter(chn => chn !== 'admin').forEach(chn => socket.emit("createdMessage", { channel: chn, author: 'Trademarktoday agent', message }))
-        socket.emit("createdMessage", { channel: curChannel, author: 'Trademarktoday agent', message })
-        // setMessages((currentMsg) => {
-        //     const prev_msg = (currentMsg && currentMsg[curChannel]) ? currentMsg[curChannel] : []
-        //     return {
-        //         ...currentMsg,
-        //         [curChannel]: [...prev_msg, { author: 'admin', message: message, channel: 'admin' }]
-        //     }
-        // });
-        // setMessage("");
+        const key = generateRandomKey(16);
+        socket.emit("createdMessage", { channel: messagesAndCurChannel.curChannel, author: 'Trademarktoday agent', message, key })
+        setMessagesAndCurChannel((currentMsgsAndCurChannel) => {
+            const prev_msg = (currentMsgsAndCurChannel.messages && currentMsgsAndCurChannel.messages[currentMsgsAndCurChannel.curChannel]) ? currentMsgsAndCurChannel.messages[currentMsgsAndCurChannel.curChannel] : []
+            return {
+                ...currentMsgsAndCurChannel,
+                messages: {
+                    ...currentMsgsAndCurChannel.messages,
+                    [currentMsgsAndCurChannel.curChannel]:
+                        [...prev_msg,
+                        { author: 'admin', message: message, channel: 'admin', key, viewed: false, deliveredToClient: false, deliveredToServer: false }]
+                }
+
+            }
+        });
+        setMessage("");
     };
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const handleToutTypeEnd = () => {
         timeoutRef.current = null;
-        socket.emit("typing", { channel: curChannel, author: 'admin', message: 'end' });
+        socket.emit("typing", { channel: messagesAndCurChannel.curChannel, author: 'admin', message: 'end' });
     }
     const handleKeypress = (e: KeyboardEvent<HTMLInputElement>) => {
         //it triggers by pressing the enter key
@@ -151,7 +187,7 @@ export default function ChatAdmin() {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = setTimeout(handleToutTypeEnd, 1000);
         } else {
-            socket.emit("typing", { channel: curChannel, author: 'admin', message: 'start' });
+            socket.emit("typing", { channel: messagesAndCurChannel.curChannel, author: 'admin', message: 'start' });
             timeoutRef.current = setTimeout(handleToutTypeEnd, 1000);
         }
     };
@@ -161,7 +197,7 @@ export default function ChatAdmin() {
             <div className="w-full h-full flex gap-4">
                 <div className="flex flex-col gap-1 justify-start px-4 w-2/5 h-full pt-4">
                     {channels.filter(chn => chn.name !== 'admin').map((chn, i) =>
-                        <div key={i} onClick={() => setCurChannel(chn.name)} className={`border border-[#ddd] p-3 break-all rounded-md cursor-pointer relative ${curChannel === chn.name ? 'bg-[#373f86] text-white' : ''} hover:bg-[#ddd] transition-all ease-in-out duration-700`}>
+                        <div key={i} onClick={() => setMessagesAndCurChannel(prev => ({ ...prev, curChannel: chn.name }))} className={`border border-[#ddd] p-3 break-all rounded-md cursor-pointer relative ${messagesAndCurChannel.curChannel === chn.name ? 'bg-[#373f86] text-white' : ''} hover:bg-[#ddd] transition-all ease-in-out duration-700`}>
                             {chn.displayName}
                             {chn.unreadCount > 0 &&
                                 <div className="w-fit min-w-[20px] h-5 flex justify-center items-center rounded-full bg-pink-600 absolute right-0 top-0 text-white p-1 text-xs">{chn.unreadCount}</div>
@@ -176,7 +212,7 @@ export default function ChatAdmin() {
                             <div className="flex justify-between cursor-pointer bg-[#373f86]">
                                 <div className="flex items-center gap-4 px-2 h-12 ">
                                     <div className="w-2 h-2 bg-green-500 rounded-full" />
-                                    <h6 className="text-white text-sm">{curChannel} {channels.find(chn => chn.name === curChannel)?.typing && <span> is typing...</span>}</h6>
+                                    <h6 className="text-white text-sm">{messagesAndCurChannel.curChannel} {channels.find(chn => chn.name === messagesAndCurChannel.curChannel)?.typing && <span> is typing...</span>}</h6>
                                 </div>
                                 <h6 className="flex items-center p-2 text-xl text-white hover:bg-blue-600 transition-all ease-in-out"> &times; </h6>
                             </div>
@@ -194,7 +230,7 @@ export default function ChatAdmin() {
                                     background-color: #e2e2e2;
                                     }
                                 `}</style>
-                                {messages[curChannel]?.map((msg, i) => {
+                                {messagesAndCurChannel.messages[messagesAndCurChannel.curChannel]?.map((msg, i) => {
                                     return (
                                         <div key={i}>
                                             {(msg.author !== 'admin') ?
@@ -230,7 +266,7 @@ export default function ChatAdmin() {
                                 })}
                             </div>
                             {
-                                channels.find(chn => chn.name === curChannel)?.typing &&
+                                channels.find(chn => chn.name === messagesAndCurChannel.curChannel)?.typing &&
                                 <div className="flex items-center pl-4">typing<Image alt="image" loading='lazy' src='/typing2.gif' width={20} height={20} style={{ height: '20px' }} /></div>
                             }
                             <div className="border-t border-gray-300 w-full flex rounded-bl-md items-center">

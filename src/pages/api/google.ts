@@ -2,12 +2,10 @@ import { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
-import { JWT_SIGN_KEY } from '@/types/utils';
+import { JWT_SIGN_KEY, REDIRECT_URI } from '@/types/utils';
 import usersModel from '@/models/usersModel';
 const CLIENT_ID = '87243843360-rthve5gqor338s2ukej91u3qu4jbkbso.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'http://trademarktoday.com.au/api/google';
-// const REDIRECT_URI = 'http://localhost/api/google';
 export default async function handler(req: Request, res: Response): Promise<void> {
   const { code } = req.query;
   const codeAsString: string = code?.toString() ?? '';
@@ -26,7 +24,7 @@ export default async function handler(req: Request, res: Response): Promise<void
     const data = await usersModel.find({ email });
     if (data.length === 0) {
       // const {data:_data} = await axios.post('/api/users', { given_name, family_name, picture, email, name })
-      const _data = await usersModel.create({ given_name, family_name, picture, email, name });
+      const _data = await usersModel.create({ given_name, family_name, picture, email, name, ACN:'123',phone_number:'123',address:'abc' });
     }
     const token = jwt.sign({ given_name, family_name, picture, email, name }, JWT_SIGN_KEY);
     res.setHeader(

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import MyTab from "../../components/MyTab";
+import MyTab from "../components/MyTab";
 import { useContext, useReducer, useState } from "react";
 import Login from "@/components/Login";
 import SignUp from "@/components/SignUp";
@@ -25,7 +25,7 @@ const Auth = () => {
                     <SignWithGoogle />
                     <MyTab props={{ value, setValue }} titles={["Log In", "Sign Up"]}>
                         <Login openState={{ open, setOpen }} setMsg={setMsg} />
-                        <SignUp openState={{ open, setOpen }} setMsg={setMsg} />
+                        <SignUp value={value} openState={{ open, setOpen }} setMsg={setMsg} />
                     </MyTab>
                 </div>
             </div>

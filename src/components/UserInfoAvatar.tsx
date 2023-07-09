@@ -14,7 +14,7 @@ const UserInfoAvatar = ({ user }: { user: User }) => {
         <div className='user-info-wrap flex flex-col gap-2 justify-center items-center absolute top-4 right-2 cursor-pointer'>
             <style jsx>{`div.user-info-wrap:hover div.user-info { opacity:1; height:160px; }`}</style>
             <div className="flex gap-2 w-full justify-end items-center text-white">
-                <h2>{user.name} </h2>
+                <h2>{user.name} {JSON.stringify(user)} </h2>
                 <Image className='rounded-full mr-2' src={user.picture} alt="logo" loading='lazy' onError={(e) => e.currentTarget.src = "/no-avatar.png"} width={40} height={40} />
 
             </div>

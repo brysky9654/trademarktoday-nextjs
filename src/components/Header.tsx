@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link";
 
 const Header = () => {
     return (
@@ -6,7 +7,7 @@ const Header = () => {
             <header className='bg-[#373f86] text-white border-b-[5px] border-[#DE4326] '>
                 {/* 373f46 */}
                 <div className='max-w-7xl px-6 flex mx-auto items-center justify-between'>
-                    <div className='py-[10px] gap-4 flex-row flex'>
+                    <Link href='/' className='py-[10px] gap-4 flex-row flex'>
                         <button>
                             <div className="h-14 relative ">
                                 <Image className=" relative -top-12" src="/trademarktoday.svg" loading='lazy' alt="Logo" width={150} height={48} />
@@ -14,7 +15,7 @@ const Header = () => {
                         </button>
                         <div className='w-0 border-r hidden md:block border-white'></div>
                         <button className=' hidden md:block font-mont text-2xl italic'>Trade Mark Today</button>
-                    </div>
+                    </Link>
                     <nav className="mr-36 2xl:mr-0">
                         <button className='px-3 py-2'>
                             <div className='flex flex-col md:flex-row gap-1 text-sm items-center'>

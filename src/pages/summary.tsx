@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import WaitingLocker from "../components/WaitingLocker";
 import { useRouter } from "next/router";
 import ProgressIndicator from "../components/ProgressIndicator";
@@ -11,6 +11,9 @@ import { Alert2, Alert4 } from "../components/AlertContainers";
 import TMCheckLayout from "../layout/TMCheckLayout";
 import { PiniaStore } from "@/store/store";
 import Chat from "@/components/Chat";
+import { verifyConsider } from "./select";
+import { verifySelect } from "./classify";
+import { PiniaType } from "@/types/interface";
 
 const CardContainer = ({ children }: { children: ReactNode }) => {
     return (
@@ -55,8 +58,25 @@ const CardARow = () => {
         </div>
     )
 }
+export const verifyClassify = (pinia: PiniaType): boolean => {
+    return !(pinia?.classes === undefined ||
+        (Object.keys(pinia?.classes).length === 0 && pinia?.classes.constructor === Object));
+}
 const Summary = () => {
     const { pinia, setPinia } = useContext(PiniaStore);
+    useEffect(() => {
+        if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
+            router.push('/consider')
+            return;
+        }
+        if (!verifyConsider(pinia)) {
+            router.push('/consider')
+        } else if (!verifySelect(pinia)) {
+            router.push('/select')
+        } else if (!verifyClassify(pinia)) {
+            router.push('/classify')
+        }
+    }, [pinia])
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [waiting, setWaiting] = useState(false);

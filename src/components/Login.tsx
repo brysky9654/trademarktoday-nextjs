@@ -3,7 +3,6 @@ import { validateEmail } from "@/types/utils";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import GoogleAddress from "./GoogleAddress";
 
 const Login = ({ openState: { open, setOpen }, setMsg }: { openState: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }, setMsg: React.Dispatch<React.SetStateAction<string>> }) => {
     const router = useRouter()
@@ -61,10 +60,6 @@ const Login = ({ openState: { open, setOpen }, setMsg }: { openState: { open: bo
                     <input name='password' onChange={handleChange} type="password" className="w-[220px] h-10 border border-[#f2f2f6] px-4 text-[14px] leading-normal" placeholder="Password" />
                 </div>
                 {!validPassword && <h4 className="text-[12px] text-red-600">*Please enter your password correctly.</h4>}
-            </div>
-            <div className="flex flex-col gap-2 w-full">
-                <h3>Address</h3>
-                <GoogleAddress />
             </div>
             <a href="#" className="cursor-pointer"><h6 className="text-[14px]">Forgot password?</h6></a>
             <button onClick={handleClick} className="flex justify-center items-center rounded-md w-[300px] bg-[#5d2067] uppercase text-white leading-[42px]">Log In</button>

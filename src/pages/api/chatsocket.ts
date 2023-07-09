@@ -18,8 +18,9 @@ export default function SocketHandler(req: any, res: any) {
     // const channels: string[] = JSON.parse(_chanelArr as string);
 
     //! here to handle START
-    socket.on("createdMessage", ({ channel, author, message }: { channel: string, author: string, message: string }) => {
-      socket.to(channel).emit(`newIncomingMessage`, { channel, author, message });
+    socket.on("createdMessage", ({ channel, author, message, key }: { channel: string, author: string, message: string, key: string }) => {
+      socket.to(channel).emit(`newIncomingMessage`, { channel, author, message, key });
+      socket.emit('deliveredToServer', { channel, author, message, key });
     });
     socket.on('typing', ({ channel, author, message }: { channel: string, author: string, message: 'start' | 'end' }) => {
       socket.to(channel).emit(`newIncomingTyping`, { channel, author, message });
@@ -27,8 +28,8 @@ export default function SocketHandler(req: any, res: any) {
     socket.on('viewed', ({ channel, author, message }: { channel: string, author: string, message: string }) => {
       socket.to(channel).emit(`newIncomingViewed`, { channel, author, message });
     })
-    socket.on('repeatMsg', ({ channel, author, message }: { channel: string, author: string, message: string }) => {
-      socket.to(channel).emit(`newIncomingRepeatMsg`, { channel, author, message });
+    socket.on('repeatMsg', ({ channel, author, message, key }: { channel: string, author: string, message: string, key: string }) => {
+      socket.to(channel).emit(`newIncomingRepeatMsg`, { channel, author, message, key });
     })
     socket.on('joinChannel', ({ channel, username }) => {
       socket.join(channel);

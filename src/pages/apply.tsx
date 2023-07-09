@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import WaitingLocker from "../components/WaitingLocker";
 import { TMCheckerElement } from "../components/ProgressIndicator";
 import Link from "next/link";
@@ -9,8 +9,26 @@ import { AlertErr } from "../components/AlertContainers";
 import { ConfirmSignForApplyModal } from "../components/Modal";
 import TMCheckLayout from "../layout/TMCheckLayout";
 import Chat from "@/components/Chat";
+import { PiniaStore } from "@/store/store";
+import { verifyConsider } from "./select";
+import { verifySelect } from "./classify";
+import { verifyClassify } from "./summary";
 
-const Apply = () => {
+const Apply = () => {    
+    const { pinia, setPinia } = useContext(PiniaStore);
+    useEffect(() => {
+        if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
+            router.push('/consider')
+            return;
+        }
+        if (!verifyConsider(pinia)) {
+            router.push('/consider')
+        } else if (!verifySelect(pinia)) {
+            router.push('/select')
+        } else if (!verifyClassify(pinia)) {
+            router.push('/classify')
+        }
+    }, [pinia])
     const [waiting, setWaiting] = useState(false);
     const [checked, setChecked] = useState(false);
     const [open, setOpen] = useState(false);

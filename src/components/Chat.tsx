@@ -2,11 +2,11 @@ import io, { Socket } from "socket.io-client";
 import { useState, useEffect, KeyboardEvent, useRef, ChangeEvent } from "react";
 import { Message } from "@/types/interface";
 import Image from "next/image";
-import { validateEmail } from "@/types/utils";
-let socket: Socket;
+import { generateRandomKey, validateEmail } from "@/types/utils";
+let socket: Socket | undefined;
 export default function Chat() {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Array<Message>>([{ author: 'Chatbot', message: 'Joining to agent...', channel: 'admin', viewed: true }]);
+  const [messages, setMessages] = useState<Array<Message>>([{ author: 'Chatbot', message: 'Joining to agent...', channel: 'admin', viewed: true, key: generateRandomKey(16) }]);
   const chatWindow = useRef<HTMLDivElement>(null);
   const [minimized, setMinimized] = useState(true);
   const [showChatAgent, setShowChatAgent] = useState(false)
@@ -17,6 +17,7 @@ export default function Chat() {
     username: '',
     email: ''
   })
+
   const handleUserData = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData(prev => ({ ...prev, [name]: value }));
@@ -25,7 +26,8 @@ export default function Chat() {
 
     return () => {
       if (socket) {
-        socket.disconnect();
+        // socket.disconnect();
+        socket = undefined;
       }
     };
   }, []);
@@ -43,20 +45,20 @@ export default function Chat() {
     socket.on('newIncomingViewed', ({ channel, author, message }: Message) => {
       setMessages(prev => prev.map(msg => ({ ...msg, viewed: true })))
     })
-    socket.on("newIncomingRepeatMsg", (msg: Message) => {
-      setMessages((currentMsg) => [
-        ...currentMsg,
-        { author: msg.author, channel: msg.channel, message: msg.message },
-      ]);
-      setMessage("");
+    socket.on('deliveredToSerer', ({ key }: Message) => {
+      setMessages(prev => prev.map(msg => (msg.key === key ? { ...msg, deliveredToServer: true } : msg)))
+    })
+    socket.on("newIncomingRepeatMsg", ({ key }: Message) => {
+
+      setMessages(prev => prev.map(msg => (msg.key === key ? { ...msg, deliveredToClient: true } : msg)))
     });
     socket.on("newIncomingMessage", (msg: Message) => {
-      socket.emit("repeatMsg", { channel: msg.channel, author: username, message: msg.message })
+      socket?.emit("repeatMsg", { channel: msg.channel, author: username, message: msg.message, key: msg.key })
       setMessages((currentMsg) => [
         ...currentMsg,
-        { author: msg.author, message: msg.message, channel: email, viewed: false },
+        { author: msg.author, message: msg.message, channel: email, viewed: false, key: msg.key },
       ]);
-      socket.emit("viewed", { channel: email, author: username, message: 'viewed' })
+      socket?.emit("viewed", { channel: email, author: username, message: 'viewed' })
     });
     socket.on('disconnected', (msg: Message) => {
       console.log('disconnected');
@@ -74,17 +76,18 @@ export default function Chat() {
   }, [messages])
   const sendMessage = async () => {
     if (message.trim() === '') return;
-    socket.emit("createdMessage", { channel: userData.email, author: userData.username, message });
-    // setMessages((currentMsg) => [
-    //   ...currentMsg,
-    //   { author: userData.username, message, channel: userData.email },
-    // ]);
-    // setMessage("");
+    const key = generateRandomKey(16)
+    socket?.emit("createdMessage", { channel: userData.email, author: userData.username, message, key });
+    setMessages((currentMsg) => [
+      ...currentMsg,
+      { author: userData.username, channel: userData.email, message, key, viewed: false, deliveredToClient: false, deliveredToServer: false }
+    ]);
+    setMessage("");
   };
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const handleToutTypeEnd = () => {
     timeoutRef.current = null;
-    socket.emit("typing", { channel: userData.email, author: userData.username, message: 'end' });
+    socket?.emit("typing", { channel: userData.email, author: userData.username, message: 'end' });
   }
   const handleKeypress = (e: KeyboardEvent<HTMLInputElement>) => {
     //it triggers by pressing the enter key
@@ -97,7 +100,7 @@ export default function Chat() {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(handleToutTypeEnd, 1000);
     } else {
-      socket.emit("typing", { channel: userData.email, author: userData.username, message: 'start' });
+      socket?.emit("typing", { channel: userData.email, author: userData.username, message: 'start' });
       timeoutRef.current = setTimeout(handleToutTypeEnd, 1000);
     }
   };
@@ -105,20 +108,24 @@ export default function Chat() {
   const handleShowChat = () => {
     const _json = JSON.parse(localStorage.getItem('userData') as string);
     const _messages = JSON.parse(localStorage.getItem('messages') as string);
-    if (true) {// !socket
+    if (_messages && !(Object.keys(_messages).length === 0 && _messages.constructor === Object)) {
+      setMessages(_messages);
+    }
+    if (_json && !(Object.keys(_json).length === 0 && _json.constructor === Object)) {
+      setUserData(_json);
+    }
+    if (!socket) {// 
       if (_json && !(Object.keys(_json).length === 0 && _json.constructor === Object)) {
-        setUserData(_json);
         socketInitializer({ username: _json.username, email: _json.email });
-        if (_messages && !(Object.keys(_messages).length === 0 && _messages.constructor === Object)) {
-          setMessages(_messages);
-        }
         setMinimized(false)
       } else {
         setShowChatAgent(true)
       }
     } else {
+      socket.emit('joinChannel', { channel: _json.email, username: _json.username });
       setMinimized(false)
     }
+    console.log(socket)
   }
   const handleInitChat = () => {
     setValidUserName(userData.username.trim() !== '');
@@ -155,7 +162,7 @@ export default function Chat() {
         <div className="flex flex-col overflow-hidden justify-end bg-white h-full min-w-[33%] max-w-[100%] rounded-md shadow-[0_0_2px_2px_#999]">
           <div onClick={() => setMinimized(true)} className="flex justify-between cursor-pointer bg-[#373f86]">
             <div className="flex items-center gap-4 px-2 h-12 ">
-              <div className="w-2 h-2 bg-green-500 rounded-full" />
+              <div className={`w-2 h-2 ${true ? 'bg-green-500' : 'bg-gray-300'} rounded-full`} />
               <h6 className="text-white text-sm">Trademarktoday Agent</h6>
             </div>
             <h6 className="flex items-center p-2 text-xl text-white hover:bg-blue-600 transition-all ease-in-out"> &times; </h6>
@@ -194,10 +201,12 @@ export default function Chat() {
                       <h6 className="w-full text-right px-4 text-[12px]">Me</h6>
                       <div className="flex justify-end border-b border-gray-200 pb-2">
                         <div className="relative w-fit max-w-[90%]">
-                          <div className="chat-content break-words break-all w-fit py-1 px-2 pr-6 bg-blue-500 text-white rounded-md mx-4 overflow-visible" >
+                          <div className={`chat-content break-words break-all w-fit py-1 px-2 pr-6 ${true /* msg.deliveredToServer */ ? 'bg-blue-500 text-white' : 'bg-gray-600 text-white'}  rounded-md mx-4 overflow-visible`} >
                             {msg.message}
                           </div>
-                          <div className="absolute bottom-[6px] right-[20px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>
+                          {msg.deliveredToClient &&
+                            <div className="absolute bottom-[6px] right-[20px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>
+                          }
                           {msg.viewed &&
                             <div className="absolute bottom-[6px] right-[17px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>
                           }

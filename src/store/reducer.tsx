@@ -5,7 +5,7 @@ const reducer = (state: StateType, action: ActionType): StateType => {
         case "CHANGE_FORMDATA":
             return {
                 ...state,
-                formData: action.payload.value as FormDataType
+                formData: { ...state.formData, ...action.payload.value as { [key: string]: string; } }
             };
         case "SET_OTPCODE":
             return {

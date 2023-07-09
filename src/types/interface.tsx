@@ -7,6 +7,9 @@ export type User = {
   given_name: string
   family_name: string
   picture: string
+  ACN: string
+  phone_number: string
+  address: string
 }
 export type Context = {
   req: IncomingMessage; // an HTTP incoming message object (e.g., from Node.js http.IncomingMessage)
@@ -16,8 +19,9 @@ export type FormDataType = {
   email: string
   name: string
   password: string
-  given_name: string
-  family_name: string
+  ACN: string
+  phone_number: string
+  address: string
 }
 export interface StateType {
   otp: boolean
@@ -34,18 +38,18 @@ type ClassPinias = {
   [key: string]: ClassPinia[];
 };
 export interface PiniaType {
-  acceptedTerms?:boolean
-  markType?:'Word' | 'Logo'
-  word?:string
-  wordContained?:boolean
-  containedWord?:'string'
-  logo?:string
-  classes?:ClassPinias
+  acceptedTerms?: boolean
+  markType?: 'Word' | 'Logo'
+  word?: string
+  wordContained?: boolean
+  containedWord?: 'string'
+  logo?: string
+  classes?: ClassPinias
 }
 export interface ActionType {
   type: 'CHANGE_FORMDATA' | 'SET_OTPCODE' | 'SHOW_OTPCODE' | 'SET_WAITING';
   payload: {
-    value: FormDataType | string | boolean
+    value: FormDataType | string | boolean | { [key: string]: string }
   }
 }
 export type DispatchType = (action: ActionType) => void;
@@ -59,8 +63,11 @@ export interface PiniaContextType {
   setPinia: (_: {}) => void;
 }
 export type Message = {
-  channel:string
+  key: string
+  channel: string
   author: string;
   message: string;
-  viewed?:boolean
+  viewed?: boolean
+  deliveredToServer?: boolean
+  deliveredToClient?: boolean
 };

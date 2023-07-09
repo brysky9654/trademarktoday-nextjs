@@ -21,9 +21,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout || ((page) => page)
 
-  const title = `Trademark Checker`
+  const title = `Trademark Today Filing`
 
-  const description = 'Trademark filing for IP Australia'
+  const description = 'Trademarktoday supports free initial trade mark check in minutes and registration of your trademark for Australia. Please kick off the process of protecting your brand and have some fun while doing it!'
 
   const imageWidth = '1920'
 
@@ -47,7 +47,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
               {/* <meta property="og:url" content={url} /> */}
-              <meta property="og:site_name" content="ChristianSoh" />
+              <meta property="og:site_name" content="Trade mark today for Australian trademark registration and protecting" />
               <meta property="og:title" content={title} />
               <meta property="og:description" content={description} />
               {/* <meta property="og:image" content={image} /> */}
@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               {/* <meta property="twitter:image:src" content={image} /> */}
               <meta property="twitter:image:width" content={imageWidth} />
               <meta property="twitter:image:height" content={imageHeight} />
-              <title> Trade Mark Today </title>
+              <title> Trade Mark Today for Australia </title>
               <link rel="icon" href="/trademarktoday.ico" />
             </Head>
 
