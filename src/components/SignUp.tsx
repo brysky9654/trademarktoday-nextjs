@@ -98,10 +98,18 @@ const SignUp = ({ value, openState: { open, setOpen }, setMsg }: { value: number
                 {!validPassword && <h4 className="text-[12px] text-red-600">*Please enter your password correctly.</h4>}
             </div>
             <div className="flex flex-col">
-                <input name='ACN' onChange={handleChange} className="w-[260px] h-10 border border-[#f2f2f6] px-4 text-[14px] leading-normal" placeholder="ACN(optional)" />
+                <div className="flex gap-0 justify-center items-center pl-10 text-[#888888] bg-[#f2f2f6] rounded-tr-md rounded-br-md overflow-hidden relative">
+                    <svg className='w-4 h-4 absolute left-[14px] top-3 align-baseline inline-block stroke-current fill-none '><use href="#code"></use></svg>
+                    <input name='ACN' onChange={handleChange} className="w-[220px] h-10 border border-[#f2f2f6] px-4 text-[14px] leading-normal" placeholder="ACN(optional)" />
+                </div>
+
             </div>
             <div className="flex flex-col">
-                <GoogleAddress onPlaceChange={handlePlaceChange} className="w-[260px] h-10 border border-[#f2f2f6] px-4 text-[14px] leading-normal" />
+                <div className="flex gap-0 justify-center items-center pl-10 text-[#888888] bg-[#f2f2f6] rounded-tr-md rounded-br-md overflow-hidden relative">
+                    <svg className='w-4 h-4 absolute left-[14px] top-3 align-baseline inline-block stroke-current fill-[#888888] '><use href="#address"></use></svg>
+                    <GoogleAddress onPlaceChange={handlePlaceChange} className="w-[220px] h-10 border border-[#f2f2f6] px-4 text-[14px] leading-normal" />
+                </div>
+                
                 {!validAddress && <h4 className="text-[12px] text-red-600">*Please enter your address correctly.</h4>}
             </div>
             <div className="flex flex-col w-[260px]">

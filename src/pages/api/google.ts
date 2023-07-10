@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
-import { JWT_SIGN_KEY, REDIRECT_URI } from '@/types/utils';
+import { JWT_SIGN_KEY} from '@/types/utils';
 import usersModel from '@/models/usersModel';
-const CLIENT_ID = '87243843360-rthve5gqor338s2ukej91u3qu4jbkbso.apps.googleusercontent.com';
+import { CLIENT_ID, REDIRECT_URI } from '@/components/SignWithGoogle';
 const CLIENT_SECRET = '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';
 export default async function handler(req: Request, res: Response): Promise<void> {
   const { code } = req.query;

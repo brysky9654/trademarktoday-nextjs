@@ -3,9 +3,9 @@ import { ReactElement } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-const TMCheckLayout = (page: ReactElement,pageProps:AppProps) => {
+const TMCheckLayout = (page: ReactElement, pageProps: AppProps) => {
     return (
-        <div id="main-start-section" className='flex flex-col'>
+        <div id="main-start-section" className='flex flex-col pt-20'>
             <div className='pb-5 flex-grow'>
                 <Header />
                 {page}

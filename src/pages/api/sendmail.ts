@@ -31,7 +31,7 @@ export default function handler(req: Request, res: Response): void {
                 <tbody>
                     <tr>
                         <td style="background:#373f86;border-radius:3px 3px 0 0;padding:10px;text-align:center; display:flex; justify-content:center; align-items:center;">
-                            <img src="http://trademarktoday.com.au/trademarktoday_logo.png" width="145" height="60" alt="Syed logo" border="0"
+                            <img src="https://trademarktoday.com.au/trademarktoday_logo.png" width="145" height="60" alt="tmtoday logo" border="0"
                                 style="font-family:sans-serif;font-size:15px;line-height:140%;color:#555555" class="CToWUd"
                                 data-bit="iit">
                                 <h3 style="margin:0; padding:0 20px; color:white; font-family:'Amazon Ember','Helvetica Neue',Roboto,Arial,sans-serif; font-style:italic;">Trade Mark Today</h3>

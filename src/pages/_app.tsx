@@ -65,12 +65,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               <link rel="icon" href="/trademarktoday.ico" />
             </Head>
 
-            <Script
+            <Script script-src-elem
               src="https://www.googletagmanager.com/gtag/js?id=UA-130795909-1"
               strategy="afterInteractive"
             />
 
-            <Script id="google-analytics" strategy="afterInteractive">
+            <Script script-src-elem id="google-analytics" strategy="afterInteractive">
               {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}

@@ -1,8 +1,11 @@
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
-export const REDIRECT_URI = 'http://trademarktoday.com.au/api/google';
-// export const REDIRECT_URI = 'http://localhost/api/google';
+import { v4 as uuidv4 } from 'uuid';
+
 export const JWT_SIGN_KEY = 'de98hw9ew0hbmj6v8sd9w';
+export function generateNonce() {
+  return uuidv4();
+}
 export const hash = async (password: string) => {
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);

@@ -1,4 +1,6 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const next = require('next');
 const dotenv = require("dotenv");
 const morgan = require("morgan");
@@ -17,12 +19,19 @@ app.prepare().then(() => {
   server.use(cors());
   server.use(bodyParser.json());
   server.use(express.static(path.join(__dirname, 'public')))
+  const options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+  };
   connectToMongodb();
-  server.all('*', (req,res) => {
+  server.all('*', (req, res) => {
     return handle(req, res);
   });
-  server.listen(process.env.PORT, (err) => {
-    if (err) throw err;
-    console.log('> Ready on http://localhost:'+process.env.PORT);
+  // server.listen(process.env.PORT, (err) => {
+  //   if (err) throw err;
+  //   console.log('> Ready on http://localhost:' + process.env.PORT);
+  // });
+  https.createServer(options, server).listen(443, () => {
+    console.log('Server running on https://localhost');
   });
 });

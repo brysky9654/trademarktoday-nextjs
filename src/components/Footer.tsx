@@ -1,8 +1,8 @@
 const Footer = () => {
     return (
         <>
-            <footer className='bg-[#141838] text-white leading-7'>
-                {/* 1D252C */}
+            <footer className='bg-[#1d262d] text-white leading-7'>
+                {/* 1D252C 141838 */}
                 <div className='max-w-[1272px] mx-auto p-6 pb-10 grid gap-3 grid-cols-12'>
                     <h2 className='text-2xl col-span-3 font-mont font-bold'>Trade Mark Today</h2>
                     <nav className='col-start-5 col-span-3'>

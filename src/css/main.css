@@ -19,31 +19,31 @@ body,
 
 @keyframes badgeflowing {
   0% {
-    top: 0px;
+    top: -8px;
   }
 
   30% {
-    top: 0px;
+    top: -8px;
   }
 
   33% {
-    top: -42px;
+    top: -64px;
   }
 
   63% {
-    top: -42px;
+    top: -64px;
   }
 
   66% {
-    top: -84px;
+    top: -124px;
   }
 
   96% {
-    top: -84px;
+    top: -124px;
   }
 
   100% {
-    top: -126px;
+    top: -176px;
   }
 }
 

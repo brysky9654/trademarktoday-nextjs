@@ -2,7 +2,7 @@ import Cookies from 'cookies';
 import jwt from 'jsonwebtoken'
 import { JWT_SIGN_KEY } from '@/types/utils';
 import { Context, User } from '@/types/interface';
-const ServerSideProps = (context: Context) => {
+const ServerSidePropsAuthorized = (context: Context) => {
     const cookies = new Cookies(context.req, context.res);
     const token = cookies.get('token');
     const tokenAsString = token?.toString() ?? '';
@@ -21,4 +21,4 @@ const ServerSideProps = (context: Context) => {
   
   
   }
-  export default ServerSideProps;
+  export default ServerSidePropsAuthorized;

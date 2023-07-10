@@ -49,7 +49,7 @@ const Login = ({ openState: { open, setOpen }, setMsg }: { openState: { open: bo
         <div className="flex flex-col h-full gap-4 justify-start items-center">
             <div className="flex flex-col">
                 <div className="flex gap-0 justify-center items-center pl-10 text-[#888888] bg-[#f2f2f6] rounded-tr-md rounded-br-md overflow-hidden relative">
-                    <svg className='w-4 h-4 absolute left-[14px] top-3 align-baseline inline-block stroke-current fill-none '><use href="#user"></use></svg>
+                    <svg className='w-4 h-4 absolute left-[14px] top-3 align-baseline inline-block stroke-current fill-none '><use href="#mail"></use></svg>
                     <input name='email' type="email" onChange={handleChange} className="w-[220px] h-10 border border-[#f2f2f6] px-4 text-[14px] leading-normal" placeholder="Email" />
                 </div>
                 {!validEmail && <h4 className="text-[12px] text-red-600">*Invalid email type. Please fill in correct type.</h4>}
