@@ -1,8 +1,10 @@
 import Image from "next/image"
 import Link from "next/link";
 import UserInfoAvatar from "./UserInfoAvatar";
+import { useRouter } from "next/router";
 
 const Header = () => {
+    const router = useRouter();
     return (
         <>
             <UserInfoAvatar />
@@ -14,10 +16,10 @@ const Header = () => {
                         <Link href='/' className='py-[10px] gap-4 flex-row flex'>
                             <button>
                                 <div className="h-14 relative hover:scale-125 transition-all ease-in-out duration-1000 ">
-                                    <Image className=" relative -top-12" src="/trademarktoday.svg" alt="Logo" width={150} height={48} priority style={{visibility:'hidden'}} />
+                                    <Image className=" relative -top-12" src="/trademarktoday.svg" alt="Logo" width={150} height={48} priority style={{ visibility: 'hidden' }} />
                                 </div>
                             </button>
-                            <div className='w-0 border-r hidden md:block border-black+'></div>
+                            <div className='w-0 border-r hidden md:block border-black'></div>
                             {/* <button className=' hidden md:block font-mont text-2xl italic text-red-500'>Trade Mark Today</button> */}
                         </Link>
 
@@ -26,6 +28,7 @@ const Header = () => {
                             <li>Services</li>
                             <li>Pricing</li>
                             <li>Resources</li>
+                            <li onClick={() => router.push('/checkout')} className="hover:border-b border-black">Apply Filing</li>
                         </ul>
                     </div>
                     <nav className="mr-36 2xl:mr-0">

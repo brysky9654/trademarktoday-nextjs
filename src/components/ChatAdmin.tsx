@@ -253,8 +253,12 @@ export default function ChatAdmin() {
                                                             <div className="chat-content break-words break-all w-fit py-1 px-2 pr-6 bg-blue-500 text-white rounded-md mx-4 overflow-visible" >
                                                                 {msg.message}
                                                             </div>
-                                                            <div className="absolute bottom-[6px] right-[20px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>
-                                                            <div className="absolute bottom-[6px] right-[17px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>
+                                                            {msg.deliveredToClient &&
+                                                                <div className="absolute bottom-[6px] right-[20px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>
+                                                            }
+                                                            {msg.viewed &&
+                                                                <div className="absolute bottom-[6px] right-[17px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>
+                                                            }
                                                             <div className="absolute bottom-[0px] right-[9px] w-3 h-3 bg-blue-500" />
                                                             <div className="absolute bottom-[0px] -right-[4px] w-5 h-5 bg-white rounded-full" />
                                                         </div>

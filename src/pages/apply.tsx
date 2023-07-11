@@ -13,8 +13,9 @@ import { PiniaStore } from "@/store/store";
 import { verifyConsider } from "./select";
 import { verifySelect } from "./classify";
 import { verifyClassify } from "./summary";
+import { verifyToken } from "@/components/UserInfoAvatar";
 
-const Apply = () => {    
+const Apply = () => {
     const { pinia, setPinia } = useContext(PiniaStore);
     useEffect(() => {
         if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
@@ -41,7 +42,11 @@ const Apply = () => {
             setShowAlert(true);
             window.scrollTo(0, 0)
         } else {
-            setOpen(true)
+            if (verifyToken()) {
+                router.push('/checkout')
+            } else {
+                setOpen(true)
+            }            
         }
     }
     const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
