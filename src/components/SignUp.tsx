@@ -26,7 +26,7 @@ const SignUp = ({ value, openState: { open, setOpen }, setMsg }: { value: number
         const { name, value } = e.target;
         dispatchOtpState({ type: 'CHANGE_FORMDATA', payload: { value: { [name]: value } } })//({ ...prev, [name]: value })
     }
-    const handlePlaceChange = (place: any) => {
+    const handlePlaceChange = (place: any) => {console.log(place)
         const address = place.name ? place.name : place.formatted_address;
         dispatchOtpState({ type: 'CHANGE_FORMDATA', payload: { value: { address } } })
     }

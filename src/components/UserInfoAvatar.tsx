@@ -67,7 +67,7 @@ const UserInfoAvatar = () => {//{ user }: { user: User }
                         </div>
                     </div>
                     :
-                    <button onClick={() => router.push('/auth')} className='user-info-wrap flex flex-col gap-2 justify-center items-center fixed cursor-pointer text-black z-[51] top-6 right-4  font-mont'>
+                    <button onClick={() => router.push('/auth')} className='user-info-wrap flex flex-col p-2 rounded-md justify-center items-center fixed cursor-pointer text-black z-[51] top-4 right-4 font-mont hover:bg-blue-500 hover:text-white transition-all ease-in-out duration-700'>
                         Log in | Sign up
                     </button>
             }

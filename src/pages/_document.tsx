@@ -7,7 +7,7 @@ const MyDocument = () => {
             <Head nonce={nonce}>
                 <meta charSet="utf-8" />
                 <meta httpEquiv="Content-Security-Policy"
-                    content={`script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.stripe.com https://js.stripe.com https://apis.google.com https://www.googletagmanager.com https://www.google-analytics.com`}
+                    content={`script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.stripe.com https://maps.googleapis.com https://js.stripe.com https://apis.google.com https://www.googletagmanager.com https://www.google-analytics.com`}
                 />
                 {/* <meta http-equiv="Content-Security-Policy"
                     content={`script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://js.stripe.com https://apis.google.com https://www.googletagmanager.com`}

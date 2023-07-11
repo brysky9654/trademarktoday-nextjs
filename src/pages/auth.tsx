@@ -22,7 +22,7 @@ const Auth = () => {
 
                 <OTPModal openState={{ open, setOpen }} setMsg={setMsg} />
                 <div className="flex flex-col justify-center items-center gap-4 w-96 p-5 pt-12 rounded-md bg-white shadow-[0px_1px_2px_#000]">
-                    <Image onClick={() => router.push('/')} className="cursor-pointer hover:scale-150 transition-all ease-in-out duration-700" src="/trademarktoday_logo.png" alt="logo" loading="lazy" width={188} height={58} />
+                    <Image onClick={() => router.push('/')} className="cursor-pointer hover:scale-150 transition-all ease-in-out duration-700" src="/trademarktoday_logo.png" alt="logo" priority width={188} height={58} />
                     <h2 className="text-[22px] leading-[30px] font-mont">Login to your account</h2>
                     <SignWithGoogle />
                     <MyTab props={{ value, setValue }} titles={["Log In", "Sign Up"]}>
