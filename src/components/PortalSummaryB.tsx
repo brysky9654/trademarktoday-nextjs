@@ -48,7 +48,7 @@ const PortalSummaryB = () => {
                                 </div>
                                 <Link className="inline-block h-fit text-[16px] leading-8 font-semibold px-4 py-2 border border-black rounded-md hover:text-white hover:bg-[#72757E] transition-all ease-in-out" href="/classify">Edit</Link>
                             </div>
-                            {pinia.classes && Object.keys(pinia.classes).map((classKey: string, index: number) => (
+                            {pinia?.classes !== undefined && Object.keys(pinia.classes).map((classKey: string, index: number) => (
                                 <>
                                     <div className="flex gap-4 pt-6 flex-wrap">
                                         {pinia.classes && pinia.classes[classKey] && pinia.classes[classKey].map((item, index) => (

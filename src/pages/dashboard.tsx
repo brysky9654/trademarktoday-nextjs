@@ -5,8 +5,21 @@ import ServerSidePropsAuthorized from '@/layout/ServerSidePropsAuthorized';
 import Link from 'next/link';
 import Image from 'next/image';
 import Chat from '@/components/Chat';
+import { useContext, useEffect } from 'react';
+import { PiniaStore } from '@/store/store';
+import { useRouter } from 'next/router';
 const Dashboard = ({ user }: { user: User }) => {
-
+  const { pinia, setPinia } = useContext(PiniaStore);
+  const router = useRouter();
+  // useEffect(() => {
+  //     if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
+  //         // router.push('/consider')
+  //         return;
+  //     }      
+  // }, [pinia])
+  useEffect(()=>{
+    router.push('/checkout')
+  },[])
   return (
     <>
       <main className='max-w-7xl mx-auto px-6 py-4'>

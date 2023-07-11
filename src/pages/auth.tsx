@@ -9,9 +9,13 @@ import { OTPStore, initialState } from "@/store/store";
 import reducer from "@/store/reducer";
 import WaitingLocker from "@/components/WaitingLocker";
 import { useRouter } from "next/router";
+import { verifyToken } from "@/components/Header";
 
 const Auth = () => {
     const router = useRouter();
+    if(verifyToken()){
+        router.push('/dashboard')
+    }
     const [otpState, dispatchOtpState] = useReducer(reducer, initialState);
     const [value, setValue] = useState(0);
     const [msg, setMsg] = useState("Already registered user");

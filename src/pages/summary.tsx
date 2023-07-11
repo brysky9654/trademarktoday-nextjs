@@ -66,7 +66,7 @@ const Summary = () => {
     const { pinia, setPinia } = useContext(PiniaStore);
     useEffect(() => {
         if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
-            router.push('/consider')
+            // router.push('/consider')
             return;
         }
         if (!verifyConsider(pinia)) {

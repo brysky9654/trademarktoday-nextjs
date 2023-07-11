@@ -13,13 +13,13 @@ import { PiniaStore } from "@/store/store";
 import { verifyConsider } from "./select";
 import { verifySelect } from "./classify";
 import { verifyClassify } from "./summary";
-import { verifyToken } from "@/components/UserInfoAvatar";
+import { verifyToken } from "@/components/Header";
 
 const Apply = () => {
     const { pinia, setPinia } = useContext(PiniaStore);
     useEffect(() => {
         if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
-            router.push('/consider')
+            // router.push('/consider')
             return;
         }
         if (!verifyConsider(pinia)) {

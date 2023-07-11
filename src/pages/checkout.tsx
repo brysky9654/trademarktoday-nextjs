@@ -12,12 +12,19 @@ import { useContext, useEffect, useState } from 'react';
 import { PiniaStore } from '@/store/store';
 import axios from 'axios';
 import { ClassBadge } from './classify';
+import { useRouter } from 'next/router';
 const Checkout = ({ user }: { user: User }) => {
   const { pinia, setPinia } = useContext(PiniaStore);
   const [price, setPrice] = useState(0)
+  const router = useRouter();
   useEffect(() => {
     if ((pinia?.classes !== undefined && !(Object.keys(pinia.classes).length === 0 && pinia.classes.constructor === Object))) {
-      setPrice((Object.keys(pinia.classes).length * 590 - (Object.keys(pinia.classes).length - 1) * 100))
+      const price_value = (Object.keys(pinia.classes).length * 590 - (Object.keys(pinia.classes).length - 1) * 100);
+      if (price_value === 0) {
+        router.push('/apply');
+      } else {
+        setPrice(price_value)
+      }
     }
   }, [pinia])
   const handlePay = async () => {
@@ -45,14 +52,14 @@ const Checkout = ({ user }: { user: User }) => {
                 <h4><span className='bg-green-600 inline-block p-1 py-0 mx-1 text-white'>&#10003;</span> For basic cost {price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} </h4>
                 <div>
                   <div id="pricingCard" className="flex flex-col w-full pl-8 ">
-                    {pinia.classes && Object.keys(pinia.classes).map((classKey: string, index: number) => (
+                    {pinia?.classes !== undefined && Object.keys(pinia.classes).map((classKey: string, index: number) => (
                       <div key={index} className="flex flex-col gap-6 ">
                         <div className="flex justify-between w-full pr-2">
                           Class {classKey}
                           {index > 0 ? <div><span className="line-through decoration-2 decoration-black text-red-500 font-bold pr-4">$590</span>$490</div> : <span>$590</span>}
                         </div>
                         {/* <div className="flex flex-wrap gap-2">
-                          {pinia.classes && pinia.classes[classKey] && pinia.classes[classKey].map((item, index_inner) => (
+                          {pinia?.classes !== undefined && pinia.classes[classKey] && pinia.classes[classKey].map((item, index_inner) => (
                             <button key={index_inner} className="flex gap-2 text-[12px] leading-6 items-center bg-[#F9F9F9] py-1 px-2 box-border outline-1 rounded-md outline-black">
                               <span>{item.description}</span>
                             </button>

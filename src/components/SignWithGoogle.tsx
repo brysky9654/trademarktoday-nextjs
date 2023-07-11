@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-export const REDIRECT_URI = 'https://trademarktoday.com.au/api/google';
-// export const REDIRECT_URI = 'https://localhost/api/google';
+// export const REDIRECT_URI = 'https://trademarktoday.com.au/api/google';
+export const REDIRECT_URI = 'https://localhost/api/google';
 export const CLIENT_ID = '87243843360-rthve5gqor338s2ukej91u3qu4jbkbso.apps.googleusercontent.com';
 const SignWithGoogle = () => {
     

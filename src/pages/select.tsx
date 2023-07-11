@@ -30,7 +30,7 @@ const Select = () => {
     const [imageDataUrl, setImageDataUrl] = useState(pinia?.logo);
     useEffect(() => {
         if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
-            router.push('/consider')
+            // router.push('/consider')
             return;
         }
         setWordLogo(pinia?.markType)

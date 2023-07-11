@@ -2,44 +2,8 @@ import { User } from "@/types/interface"
 import axios from "axios"
 import Image from "next/image"
 import { useRouter } from "next/router"
-import { parseCookies } from 'nookies';
-import jwt from 'jsonwebtoken'
-import { JWT_SIGN_KEY } from "@/types/utils";
-import { useEffect, useState } from "react";
-export const verifyToken = () => {
-    let user: User | undefined;
-    const cookies = parseCookies();
-    const token = cookies.token;
-    try {
-        user = jwt.verify(token, JWT_SIGN_KEY) as User
-    } catch (error) {
-        user = undefined;
-    }
-    return user;
-}
-const UserInfoAvatar = () => {//{ user }: { user: User }
-    const [user, setUser] = useState<User | undefined>(undefined)
-    const verifyToken = () => {
-        const cookies = parseCookies();
-        const token = cookies.token;
-        try {
-            setUser(jwt.verify(token, JWT_SIGN_KEY) as User)
-        } catch (error) {
-            setUser(undefined)
-        }
-    }
-    useEffect(() => verifyToken(), [])
-    useEffect(() => {
-        const handleRouteChange = (url: string) => {
-            setTimeout(() => { verifyToken() }, 1000);
-        };
-
-        router.events.on('routeChangeStart', handleRouteChange);
-
-        return () => {
-            router.events.off('routeChangeStart', handleRouteChange);
-        };
-    }, []);
+const UserInfoAvatar = ({ user }: { user: User }) => {//
+    
     const router = useRouter();
     const handleLogout = () => {
         axios.get('/api/logout');

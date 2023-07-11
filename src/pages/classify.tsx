@@ -74,7 +74,7 @@ const Classify = () => {
     }, [])
     useEffect(() => {
         if (Object.keys(pinia).length === 0 && pinia.constructor === Object) {
-            router.push('/consider')
+            // router.push('/consider')
             return;
         }
         setShowBottomCostBar(pinia.classes !== undefined && Object.keys(pinia.classes).length > 0)
@@ -219,7 +219,7 @@ const Classify = () => {
                                     <h4 className="text-[16px] leading-7 font-mont">Goods or services</h4>
                                     <span className="text-[14px] leading-5">The cost is only payable if you apply.</span>
                                 </div>
-                                {pinia.classes && Object.keys(pinia.classes).map((classKey: string, index: number) => (
+                                {pinia?.classes !== undefined && Object.keys(pinia.classes).map((classKey: string, index: number) => (
                                     <div key={index} className="flex flex-col gap-6 pt-4">
                                         <div className="flex flex-wrap gap-2">
                                             {pinia.classes && pinia.classes[classKey] && pinia.classes[classKey].map((item, index_inner) => (

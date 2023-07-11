@@ -38,6 +38,7 @@ type ClassPinias = {
   [key: string]: ClassPinia[];
 };
 export interface PiniaType {
+  initiated?:boolean
   acceptedTerms?: boolean
   markType?: 'Word' | 'Logo'
   word?: string
