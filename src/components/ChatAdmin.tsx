@@ -3,9 +3,22 @@ import { useState, useEffect, KeyboardEvent, useRef } from "react";
 import { Message } from "@/types/interface";
 import Image from "next/image";
 import { generateRandomKey } from "@/types/utils";
+import NotificationComponent from "./NotificationComponent";
+import { timeGenerate } from "./Chat";
+export const changeFav = (fav: string) => {
+    let link: any = document.querySelector("link[rel~='icon']");
+    if (!link) {
+        // Create a new link element if it doesn't exist
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+    }
+    link.href = fav;
+}
 let socket: Socket;
 export default function ChatAdmin() {
     const [message, setMessage] = useState('');
+    const [tabhidden, setTabhidden] = useState(false)
     const [messagesAndCurChannel, setMessagesAndCurChannel] = useState<{ messages: { [key: string]: Array<Message> }, curChannel: string }>({
         messages: {},
         curChannel: ''
@@ -14,6 +27,15 @@ export default function ChatAdmin() {
 
     const [channels, setChannels] = useState<{ name: string, unreadCount: number, displayName: string, typing?: boolean }[]>([]);
 
+    const handleVisibilityChange = () => {
+        setTabhidden(document.hidden);
+    };
+    useEffect(() => {
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [])
     useEffect(() => {
         socketInitializer();
         return () => {
@@ -22,6 +44,7 @@ export default function ChatAdmin() {
             }
         };
     }, []);
+    const [notificationMessage, setNotificationMessage] = useState('')
     const handleNewIncomingMessage = (msg: Message) => {
         socket.emit("repeatMsg", { channel: msg.channel, author: msg.author, message: msg.message, key: msg.key })
         setMessagesAndCurChannel((currentMsgsAndCurChannel) => {
@@ -38,11 +61,24 @@ export default function ChatAdmin() {
             return {
                 ...currentMsgsAndCurChannel,
                 messages: {
-                    ...currentMsgsAndCurChannel.messages, [msg.channel]: [...prev_msg, { author: msg.author, message: msg.message, channel: msg.channel, viewed: false, key: msg.key }]
+                    ...currentMsgsAndCurChannel.messages, [msg.channel]: [...prev_msg, { author: msg.author, message: msg.message, channel: msg.channel, viewed: false, key: msg.key, time: timeGenerate() }]
                 }
             }
         })
+        setTabhidden((th) => {
+            if (th) {
+                setNotificationMessage(`${msg.author}:${msg.message}`)
+                changeFav('/trademarktoday-badge.ico')
+            }
+            return th;
+        })
+
     }
+    useEffect(() => {
+        if (!tabhidden) {
+            changeFav('/trademarktoday.ico')
+        }
+    }, [tabhidden])
     const handleChannelCreated = ({ channel: chn, username }: { channel: string, username: string }) => {
         console.log(channels, chn)
         socket.emit('joinChannel', { channel: chn, username: 'admin' });
@@ -164,7 +200,7 @@ export default function ChatAdmin() {
                     ...currentMsgsAndCurChannel.messages,
                     [currentMsgsAndCurChannel.curChannel]:
                         [...prev_msg,
-                        { author: 'admin', message: message, channel: 'admin', key, viewed: false, deliveredToClient: false, deliveredToServer: false }]
+                        { author: 'admin', message: message, channel: 'admin', key, viewed: false, deliveredToClient: false, deliveredToServer: false, time: timeGenerate() }]
                 }
 
             }
@@ -192,8 +228,12 @@ export default function ChatAdmin() {
         }
     };
 
+
+
+
     return (
         <>
+            <NotificationComponent msg={notificationMessage} />
             <div className="w-full h-full flex gap-4">
                 <div className="flex flex-col gap-1 justify-start px-4 w-2/5 h-full pt-4">
                     {channels.filter(chn => chn.name !== 'admin').map((chn, i) =>
@@ -239,7 +279,7 @@ export default function ChatAdmin() {
                                                     <div className="flex justify-start border-b border-gray-200 pb-2">
                                                         <div className="relative w-fit max-w-[90%]">
                                                             <div className="chat-content break-words break-all w-fit py-1 px-2 bg-yellow-700 text-white rounded-md mx-4 overflow-visible" >
-                                                                {msg.message}
+                                                                {msg.message} <small className="text-[0.5rem]">{msg.time}</small>
                                                             </div>
                                                             <div className="absolute bottom-[0px] left-[9px] w-3 h-3 bg-yellow-700" />
                                                             <div className="absolute bottom-[0px] -left-[4px] w-5 h-5 bg-white rounded-full" />
@@ -251,7 +291,7 @@ export default function ChatAdmin() {
                                                     <div className="flex justify-end border-b border-gray-200 pb-2">
                                                         <div className="relative w-fit max-w-[90%]">
                                                             <div className="chat-content break-words break-all w-fit py-1 px-2 pr-6 bg-blue-500 text-white rounded-md mx-4 overflow-visible" >
-                                                                {msg.message}
+                                                                {msg.message} <small className="text-[0.5rem]">{msg.time}</small>
                                                             </div>
                                                             {msg.deliveredToClient &&
                                                                 <div className="absolute bottom-[6px] right-[20px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>

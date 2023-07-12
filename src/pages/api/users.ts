@@ -6,8 +6,8 @@ export default function handler(req: Request, res: Response) {
       const { email } = req.query;
       const emailAsString = email?.toString() ?? '';
       if (emailAsString === '') {
-        // find(req, res);
-        res.status(304).json("Fetching user data not allowed.")
+        find(req, res);
+        // res.status(304).json("Fetching user data not allowed.")
       } else {
         findByEmail({ req, res }, emailAsString);
       }

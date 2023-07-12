@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import stripe from 'stripe';
 const stripeSecretKey = 'sk_test_51NRavWKg82trmtxxLGOWXNJulDfXc1dOw9sQC1LieODEjnzGoiEKfxA0PF0xXA47eHsx8jgfqtfV0YLoTyZAhzz300M6oZAlIq';
+// const stripeSecretKey = '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';
 const stripeInstance = new stripe(stripeSecretKey as string, { apiVersion: "2022-11-15" });
 export default async function handler(req: Request, res: Response) {
-    const { price } = req.body;
+    const { price, transactionKey } = req.body;
     try {
         const session = await stripeInstance.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -20,8 +21,10 @@ export default async function handler(req: Request, res: Response) {
                 },
             ],
             mode: 'payment',
-            success_url: 'https://localhost/success',
-            cancel_url: 'https://localhost/cancel',
+            success_url: `https://localhost/payres/success?transactionKey=${transactionKey}`,
+            cancel_url: 'https://localhost/payres/fail?reason=0',
+            // success_url: `https://trademarktoday.com.au/payres/success?transactionKey=${transactionKey}`,
+            // cancel_url: 'https://trademarktoday.com.au/payres/fail',
         });
 
         res.status(200).json({ id: session.id });

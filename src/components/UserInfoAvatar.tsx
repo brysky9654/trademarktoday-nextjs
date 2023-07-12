@@ -2,9 +2,21 @@ import { User } from "@/types/interface"
 import axios from "axios"
 import Image from "next/image"
 import { useRouter } from "next/router"
-const UserInfoAvatar = ({ user }: { user: User }) => {//
-    
+import { useEffect, useState } from "react"
+const UserInfoAvatar = ({ email }: { email: string }) => {//{ user }: { user: User }
     const router = useRouter();
+    const [user, setUser] = useState<User>()
+    useEffect(() => {
+        if (email) {
+            (async () => {
+                const { data: { data } } = await axios.get(`/api/users?email=${encodeURIComponent(email)}`);
+                setUser(data[0])
+            })()
+        } else {
+            setUser(undefined)
+            return;
+        }
+    }, [email])
     const handleLogout = () => {
         axios.get('/api/logout');
         router.push('/')
@@ -41,7 +53,7 @@ const UserInfoAvatar = ({ user }: { user: User }) => {//
                         </div>
                     </div>
                     :
-                    <button onClick={() => router.push('/auth')} className='user-info-wrap flex flex-col p-2 rounded-md justify-center items-center fixed cursor-pointer text-black z-[51] top-4 right-4 font-mont hover:bg-blue-500 hover:text-white transition-all ease-in-out duration-700'>
+                    <button onClick={() => router.push('/auth')} className='user-info-wrap flex flex-col p-2 rounded-md justify-center items-center fixed cursor-pointer text-black z-[51] top-4 right-4 font-mont hover:bg-blue-500 hover:text-white transition-all ease-in-out duration-700 hover:scale-110 hover:border border-black'>
                         Log in | Sign up
                     </button>
             }

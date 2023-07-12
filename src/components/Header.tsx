@@ -6,28 +6,29 @@ import jwt from 'jsonwebtoken'
 import { useEffect, useState } from "react";
 import { User } from "@/types/interface";
 import { parseCookies } from "nookies";
-import { JWT_SIGN_KEY } from "@/types/utils";
+import { ADMIN_LIST, JWT_SIGN_KEY } from "@/types/utils";
 export const verifyToken = () => {
-    let user: User | undefined;
+    let _user_: { email: string } | undefined;
     const cookies = parseCookies();
     const token = cookies.token;
     try {
-        user = jwt.verify(token, JWT_SIGN_KEY) as User
+        _user_ = jwt.verify(token, JWT_SIGN_KEY) as { email: string }
     } catch (error) {
-        user = undefined;
+        _user_ = undefined;
     }
-    return user;
+    return _user_;
 }
 const Header = () => {
+    const [userEmail, setUserEmail] = useState('');
     const router = useRouter();
-    const [user, setUser] = useState<User | undefined>(undefined)
-    const setUserFromToken = () => {
-        setUser(verifyToken())
+    const setUseremailFromToken = () => {
+        const email = verifyToken()?.email;
+        setUserEmail(email as string)
     }
-    useEffect(() => setUserFromToken(), [])
+    useEffect(() => setUseremailFromToken(), [])
     useEffect(() => {
         const handleRouteChange = (url: string) => {
-            setTimeout(() => { setUserFromToken() }, 1000);
+            setTimeout(() => { setUseremailFromToken() }, 1000);
         };
 
         router.events.on('routeChangeStart', handleRouteChange);
@@ -39,7 +40,7 @@ const Header = () => {
 
     return (
         <>
-            <UserInfoAvatar user={user as User} />
+            <UserInfoAvatar email={userEmail} />
             <header className='bg-white/90 text-black shadow-[0_0_1px_1px_#ccc] fixed top-0 w-full z-50'>
                 {/* 373f86  border-b-[5px] border-[#DE4326] */}
                 <div className='max-w-7xl px-6 flex mx-auto items-center justify-between'>
@@ -61,8 +62,10 @@ const Header = () => {
                             <li>Pricing</li>
                             <li>Resources</li>
                             <li onClick={() => router.push('/checkout')} className="hover:border-b border-black">Apply Filing</li>
-                            {['milkyway464203@gmail.com', 'syedmosawi@gmail.com'].some(em => em === user?.email) &&
-                                <li onClick={() => router.push('/adminchat')} className="hover:border-b border-black text-red-600 font-mont">Chat with users</li>}
+                            {ADMIN_LIST.some(em => em === userEmail) && <>
+                                <li onClick={() => router.push('/adminchat')} className="hover:border-b border-black text-red-600 font-mont">Chat with users</li>
+                                <li onClick={() => router.push('/adminusers')} className="hover:border-b border-black text-red-600 font-mont">User manangement</li>
+                            </>}
                         </ul>
                     </div>
                     <nav className="mr-36 2xl:mr-0">

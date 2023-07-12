@@ -24,9 +24,9 @@ export default async function handler(req: Request, res: Response): Promise<void
     const data = await usersModel.find({ email });
     if (data.length === 0) {
       // const {data:_data} = await axios.post('/api/users', { given_name, family_name, picture, email, name })
-      const _data = await usersModel.create({ given_name, family_name, picture, email, name, ACN:'123',phone_number:'123',address:'abc' });
+      const _data = await usersModel.create({ given_name, family_name, picture, email, name, ACN:'',phone_number:'',address:'' });
     }
-    const token = jwt.sign({ given_name, family_name, picture, email, name }, JWT_SIGN_KEY);
+    const token = jwt.sign({ email }, JWT_SIGN_KEY);
     res.setHeader(
       "Set-Cookie",
       `token=${token};  Path=/; Max-Age=${60 * 60//HttpOnly;SameSite=Strict; 

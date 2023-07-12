@@ -3,6 +3,7 @@ import crypto from 'crypto'
 import { v4 as uuidv4 } from 'uuid';
 
 export const JWT_SIGN_KEY = 'de98hw9ew0hbmj6v8sd9w';
+export const ADMIN_LIST = ['milkyway464203@gmail.com', 'syedmosawi@gmail.com'];
 export function generateNonce() {
   return uuidv4();
 }

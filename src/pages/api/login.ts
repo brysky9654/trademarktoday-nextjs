@@ -17,8 +17,8 @@ export default async function handler(req: Request, res: Response) {
                 const match = await bcrypt.compare(password, hashedPassword as string);
                 if (match) {
                     authStatus = "PASSED";
-                    const { name, given_name, family_name, picture, ACN, phone_number, address } = results[0]
-                    const token = jwt.sign({ email, name, given_name, family_name, picture, ACN, phone_number, address }, JWT_SIGN_KEY);
+                    // const { name, given_name, family_name, picture, ACN, phone_number, address } = results[0]
+                    const token = jwt.sign({ email }, JWT_SIGN_KEY);
                     res.setHeader(
                         "Set-Cookie",
                         `token=${token};  Path=/; Max-Age=${60 * 60//HttpOnly;SameSite=Strict; 

@@ -1,6 +1,5 @@
 import TMCheckLayout from '../layout/TMCheckLayout';
 import { Alert3 } from '@/components/AlertContainers';
-import { Context, User } from '@/types/interface';
 import ServerSidePropsAuthorized from '@/layout/ServerSidePropsAuthorized';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -8,7 +7,7 @@ import Chat from '@/components/Chat';
 import { useContext, useEffect } from 'react';
 import { PiniaStore } from '@/store/store';
 import { useRouter } from 'next/router';
-const Dashboard = ({ user }: { user: User }) => {
+const Dashboard = ({ email }: { email: string }) => {
   const { pinia, setPinia } = useContext(PiniaStore);
   const router = useRouter();
   // useEffect(() => {

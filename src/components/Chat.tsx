@@ -3,10 +3,14 @@ import { useState, useEffect, KeyboardEvent, useRef, ChangeEvent } from "react";
 import { Message } from "@/types/interface";
 import Image from "next/image";
 import { generateRandomKey, validateEmail } from "@/types/utils";
+import NotificationComponent from "./NotificationComponent";
+import { changeFav } from "./ChatAdmin";
 let socket: Socket | undefined;
+export const timeGenerate = () => (new Date()).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
 export default function Chat() {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Array<Message>>([{ author: 'Chatbot', message: 'Joining to agent...', channel: 'admin', viewed: true, key: generateRandomKey(16) }]);
+  const [messages, setMessages] = useState<Array<Message>>([{ author: 'Chatbot', message: 'Joining to agent...', channel: 'admin', viewed: true, key: generateRandomKey(16), time: timeGenerate() }]);
+  //toLocaleDateString("en-US", { /* weekday: 'long', */ year: 'numeric', month: 'long', day: 'numeric' })
   const chatWindow = useRef<HTMLDivElement>(null);
   const [minimized, setMinimized] = useState(true);
   const [showChatAgent, setShowChatAgent] = useState(false)
@@ -17,13 +21,27 @@ export default function Chat() {
     username: '',
     email: ''
   })
-
+  const [tabhidden, setTabhidden] = useState(false)
+  useEffect(() => {
+    if (!tabhidden) {
+      changeFav('/trademarktoday.ico')
+    }
+  }, [tabhidden])
+  const [notificationMessage, setNotificationMessage] = useState('')
   const handleUserData = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData(prev => ({ ...prev, [name]: value }));
   }
   useEffect(() => {
-
+    const handleVisibilityChange = () => {
+      setTabhidden(document.hidden)
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [])
+  useEffect(() => {
     return () => {
       if (socket) {
         // socket.disconnect();
@@ -56,8 +74,15 @@ export default function Chat() {
       socket?.emit("repeatMsg", { channel: msg.channel, author: username, message: msg.message, key: msg.key })
       setMessages((currentMsg) => [
         ...currentMsg,
-        { author: msg.author, message: msg.message, channel: email, viewed: false, key: msg.key },
+        { author: msg.author, message: msg.message, channel: email, viewed: false, key: msg.key, time: timeGenerate() },
       ]);
+      setTabhidden((th) => {
+        if (th) {
+            setNotificationMessage(`${msg.author}:${msg.message}`)
+            changeFav('/trademarktoday-badge.ico')
+        }
+        return th;
+    })
       socket?.emit("viewed", { channel: email, author: username, message: 'viewed' })
     });
     socket.on('disconnected', (msg: Message) => {
@@ -80,7 +105,7 @@ export default function Chat() {
     socket?.emit("createdMessage", { channel: userData.email, author: userData.username, message, key });
     setMessages((currentMsg) => [
       ...currentMsg,
-      { author: userData.username, channel: userData.email, message, key, viewed: false, deliveredToClient: false, deliveredToServer: false }
+      { author: userData.username, channel: userData.email, message, key, viewed: false, deliveredToClient: false, deliveredToServer: false, time: timeGenerate() }
     ]);
     setMessage("");
   };
@@ -140,6 +165,7 @@ export default function Chat() {
   }
   return (
     <>
+      <NotificationComponent msg={notificationMessage} />
       <button onClick={handleShowChat} className="flex justify-center items-center rounded-full w-12 h-12 overflow-hidden cursor-pointer bg-white fixed right-3 bottom-3 shadow-[0_0_2px_2px_#888] hover:w-16 hover:h-16 transition-all ease-in-out duration-500 z-30 ">
         <Image src="/message.gif" loading='lazy' alt="Logo" width={40} height={40} />
       </button>
@@ -190,7 +216,7 @@ export default function Chat() {
                       <div className="flex justify-start border-b border-gray-200 pb-2">
                         <div className="relative w-fit max-w-[90%]">
                           <div className="chat-content break-words break-all w-fit py-1 px-2 bg-yellow-700 text-white rounded-md mx-4 overflow-visible" >
-                            {msg.message}
+                            {msg.message} <small className="text-[0.5rem]">{msg.time}</small>
                           </div>
                           <div className="absolute bottom-[0px] left-[9px] w-3 h-3 bg-yellow-700" />
                           <div className="absolute bottom-[0px] -left-[4px] w-5 h-5 bg-white rounded-full" />
@@ -202,7 +228,7 @@ export default function Chat() {
                       <div className="flex justify-end border-b border-gray-200 pb-2">
                         <div className="relative w-fit max-w-[90%]">
                           <div className={`chat-content break-words break-all w-fit py-1 px-2 pr-6 ${true /* msg.deliveredToServer */ ? 'bg-blue-500 text-white' : 'bg-gray-600 text-white'}  rounded-md mx-4 overflow-visible`} >
-                            {msg.message}
+                            {msg.message} <small className="text-[0.5rem]">{msg.time}</small>
                           </div>
                           {msg.deliveredToClient &&
                             <div className="absolute bottom-[6px] right-[20px] w-3 h-3 z-50 text-white text-xs" >&#10003;</div>

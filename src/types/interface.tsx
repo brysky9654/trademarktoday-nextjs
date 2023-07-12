@@ -38,7 +38,7 @@ type ClassPinias = {
   [key: string]: ClassPinia[];
 };
 export interface PiniaType {
-  initiated?:boolean
+  initiated?: boolean
   acceptedTerms?: boolean
   markType?: 'Word' | 'Logo'
   word?: string
@@ -64,6 +64,7 @@ export interface PiniaContextType {
   setPinia: (_: {}) => void;
 }
 export type Message = {
+  time?: string
   key: string
   channel: string
   author: string;
