@@ -55,7 +55,6 @@ const Header = () => {
                             <div className='w-0 border-r hidden md:block border-black'></div>
                             {/* <button className=' hidden md:block font-mont text-2xl italic text-red-500'>Trade Mark Today</button> */}
                         </Link>
-
                         <ul className="flex gap-4 pl-4 cursor-pointer flex-wrap">
                             <li>About Us</li>
                             <li>Services</li>

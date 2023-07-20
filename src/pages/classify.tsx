@@ -13,6 +13,7 @@ import { PiniaType } from "@/types/interface";
 import { verifyConsider } from "./select";
 import axios from "axios";
 import Chat from "@/components/Chat";
+import { getTokenIPAustralia, quickSearchIPAustralia } from "@/types/utils";
 
 export const ClassBadge = ({ text }: { text: string }) => {
     return (
@@ -66,6 +67,7 @@ const Classify = () => {
     const [isNearBottom, setIsNearBottom] = useState(false);
     const [classProducts, setClassProducts] = useState<any>(null)
     const [titles, setTitles] = useState<string[]>([])
+    const [tokenIPAustralia, setTokenIPAustralia] = useState('')
     useEffect(() => {
         (async () => {
             const { data: { data } } = await axios.get('/api/classes');
@@ -137,13 +139,23 @@ const Classify = () => {
             ...pinia, classes: removedClasses
         })
     }
-    const handleNextClick = () => {
+
+    const handleNextClick = async () => {
         if (pinia.classes !== undefined && Object.keys(pinia.classes).length > 0) {
             setWaiting(true);
-            setTimeout(() => {
-                setWaiting(false);
-                router.push('/summary');
-            }, 5000);
+            //! here
+            const query = pinia?.markType === 'Word' ? pinia?.word : (pinia?.wordContained ? pinia?.containedWord : 'Trade');
+            const accessToken: string = await getTokenIPAustralia();
+            const { count, trademarkIds }: { count: number, trademarkIds: string[] } = await quickSearchIPAustralia(query as string, accessToken)
+            const searchRes = await Promise.all(trademarkIds.slice(0, 20).map(async tId => {
+                const { data: { number, words, images } }: { data: { number: string, words: string[], images: { description: string, images: string[] } } } = await axios.get(`https://test.api.ipaustralia.gov.au/public/australian-trade-mark-search-api/v1/trade-mark/${tId}`);
+                return { number, words, images }
+            }))
+            console.log('here', searchRes)
+            //! here
+            setWaiting(false);
+            router.push('/summary');
+            // setTimeout(() => {}, 5000);
         } else {
             setShowAlert(true)
             window.scrollTo(0, 0)

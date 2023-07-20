@@ -24,7 +24,7 @@ export default async function handler(req: Request, res: Response) {
             // success_url: `https://localhost/payres/success?transactionKey=${transactionKey}`,
             // cancel_url: 'https://localhost/payres/fail?reason=0',
             success_url: `https://trademarktoday.com.au/payres/success?transactionKey=${transactionKey}`,
-            cancel_url: 'https://trademarktoday.com.au/payres/fail',
+            cancel_url: 'https://trademarktoday.com.au/payres/fail?reason=0',
         });
 
         res.status(200).json({ id: session.id });

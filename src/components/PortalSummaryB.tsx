@@ -49,22 +49,18 @@ const PortalSummaryB = () => {
                                 <Link className="inline-block h-fit text-[16px] leading-8 font-semibold px-4 py-2 border border-black rounded-md hover:text-white hover:bg-[#72757E] transition-all ease-in-out" href="/classify">Edit</Link>
                             </div>
                             {pinia?.classes !== undefined && Object.keys(pinia.classes).map((classKey: string, index: number) => (
-                                <>
-                                    <div className="flex gap-4 pt-6 flex-wrap">
-                                        {pinia.classes && pinia.classes[classKey] && pinia.classes[classKey].map((item, index) => (
-                                            <>
-                                                <span key={index} className="flex gap-2 text-[12px] leading-6 items-center bg-[#F2F2F6] py-1 px-2 box-border rounded-md ">
-                                                    {item.description}
-                                                </span>
-                                            </>
-                                        ))}
-                                        <div className="flex justify-between w-full pt-4 pr-2">
-                                            <ClassBadge text={classKey} />
-                                            {index > 0 ? <div><span className="line-through decoration-2 decoration-black text-red-500 font-bold pr-4">$590</span>$490</div> : <span>$590</span>}
-                                        </div>
-                                        <hr className="w-full" />
+                                <div key={index} className="flex gap-4 pt-6 flex-wrap">
+                                    {pinia.classes && pinia.classes[classKey] && pinia.classes[classKey].map((item, index) => (
+                                        <span key={index} className="flex gap-2 text-[12px] leading-6 items-center bg-[#F2F2F6] py-1 px-2 box-border rounded-md ">
+                                            {item.description}
+                                        </span>
+                                    ))}
+                                    <div className="flex justify-between w-full pt-4 pr-2">
+                                        <ClassBadge text={classKey} />
+                                        {index > 0 ? <div><span className="line-through decoration-2 decoration-black text-red-500 font-bold pr-4">$590</span>$490</div> : <span>$590</span>}
                                     </div>
-                                </>
+                                    <hr className="w-full" />
+                                </div>
                             ))}
                             <div className="flex justify-between w-full mt-6 px-2 py-4 pr-2 uppercase font-bold bg-[#f2f2f6]">
                                 <span>Total</span>

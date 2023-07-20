@@ -40,7 +40,7 @@ const Paysuccess = ({ email }: { email: string }) => {
             <h1 className='font-mont text-3xl'> Payment Succeed</h1>
             <h3>transactionKey:{transactionKey}</h3>
             <h3>Processing...</h3>
-            <Image src={`/loading${Math.floor(Math.random() * 9)}.gif`} alt="logo" loading="lazy" width={440} height={232} />
+            <Image src={`/loading${Math.floor(Math.random() * 9)}.gif`} alt="logo" priority width={440} height={232} />
             <Chat />
           </div>
         </main>}
