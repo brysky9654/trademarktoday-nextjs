@@ -1,10 +1,10 @@
 const ProgressPane = ({ className, title }: {
-    className?: string
-    title: string
-  }) => {
-    return (
-      <>
-        <style jsx>{`
+  className?: string
+  title: string
+}) => {
+  return (
+    <>
+      <style jsx>{`
           div.state-active::before { 
             background-color: #040c13; 
             content: ""; 
@@ -28,10 +28,10 @@ const ProgressPane = ({ className, title }: {
           }
 
         `}</style>
-        <div className={`${className} w-full`}>
-          <p className="text-[14px] leading-5 whitespace-nowrap overflow-ellipsis overflow-x-hidden">{title}</p>
-        </div>
-      </>
-    )
-  }
-  export default ProgressPane;
+      <div className={`${className} w-full`}>
+        <p className="text-[14px] leading-5 overflow-ellipsis overflow-x-hidden">{title}</p> {/* whitespace-nowrap */}
+      </div>
+    </>
+  )
+}
+export default ProgressPane;

@@ -41,7 +41,7 @@ const Consider = () => {
           <ProgressIndicator stage={1} />
           <AlertErr showAlert={showAlert} msg="You must acknowledge you have read the disclaimer and privacy notice to continue." />
           <section id="contentMain" className="grid grid-cols-12 gap-6">
-            <h1 className="font-mont text-[32px] font-bold col-span-12">Key things to watch for</h1>
+            <h1 className="font-mont text-[24px] md:text-[32px] font-bold col-span-12">Key things to watch for</h1>
             <PortalConsider
               title="Being too similar"
               message="Steer clear of registering a trademark resembling a previously registered one."
@@ -62,7 +62,7 @@ const Consider = () => {
               title="Common sayings"
               message="Avoid generic phrases when choosing a trademark."
               category="Fix My Computer" />
-            <div className="flex flex-col gap-1 justify-center items-center col-span-4 p-4 border-[2px] border-dashed border-[#C8CAD0] ">
+            <div className="flex flex-col gap-1 justify-center items-center col-span-12 md:col-span-4 p-4 border-[2px] border-dashed border-[#C8CAD0] ">
               <h3 className="font-mont text-[18px] leading-7">Trade marks can be complex</h3>
               <p className="text-[14px] leading-5 text-center">
                 Results from the free preliminary trade mark search cannot guarantee an outcome if you decide to apply. If you need assistance, consider chatting with one of our &nbsp;

@@ -169,7 +169,7 @@ const Classify = () => {
                     <ProgressIndicator stage={3} />
                     <section id="contentMain" className="grid grid-cols-12 gap-6">
                         <AlertErr showAlert={showAlert} msg="Select at least one good or service to continue." />
-                        <h1 className="font-mont text-[32px] font-bold col-span-12">What goods and or services are associated with your trade mark?</h1>
+                        <h1 className="font-mont text-[24px] md:text-[32px] font-bold col-span-12">What goods and or services are associated with your trade mark?</h1>
                         <Alert2 msg={
                             <>
                                 <h4 className="text-[14px] leading-6">Goods or services relate to how your trade mark is protected.</h4>
@@ -179,7 +179,7 @@ const Classify = () => {
                                 </button>
                             </>
                         } />
-                        <section className="col-span-8 flex flex-col gap-4">
+                        <section className="col-span-12 md:col-span-8 flex flex-col gap-4">
                             <section className="col-span-6 flex flex-col gap-2">
                                 <div className="flex">
                                     <h3 className="text-[18px] font-mont leading-6 flex-grow">Search for your goods or services</h3>
@@ -213,7 +213,7 @@ const Classify = () => {
                                 (<PortalClass key={index} classNo={classProduct._class} title={titles[Number(classProduct._class) - 1]} setShowBottomCostBar={setShowBottomCostBar} products={classProduct.product} />))}
 
                         </section>
-                        <section className="col-span-4 flex flex-col gap-4 p-4 border h-fit border-[#C8CAD0] rounded-md" >
+                        <section className="col-span-12 md:col-span-4 flex flex-col gap-4 p-4 border h-fit border-[#C8CAD0] rounded-md" >
                             <h5 className="font-mont text-[16px] leading-7">Your trade mark</h5>
                             <div className="flex justify-between items-center gap-1">
                                 {

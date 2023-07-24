@@ -12,7 +12,7 @@ const ProgressIndicator = ({ stage }: { stage: number }) => {
     return (
         <section id="progressIndicator">
             <TMCheckerElement />
-            <div id="steps-container" className="flex justify-between items-center gap-x-6 bg-white rounded-xl pt-4 shadow-[0_0_8px_8px_#fff]">
+            <div id="steps-container" className="flex flex-col md:flex-row justify-between items-start gap-x-6 bg-white rounded-xl pt-4 shadow-[0_0_8px_8px_#fff]">
                 <ProgressPane className={`${stage >= 1 ? "state-active" : ""}`} title="Getting started" />
                 <ProgressPane className={`${stage >= 2 ? "state-active" : ""}`} title="Choose trade mark" />
                 <ProgressPane className={`${stage >= 3 ? "state-active" : ""}`} title="Select goods or services" />

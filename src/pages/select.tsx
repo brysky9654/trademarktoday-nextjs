@@ -108,7 +108,7 @@ const Select = () => {
                     <ProgressIndicator stage={2} />
                     <section id="contentMain" className="grid grid-cols-12 gap-6">
                         <AlertErr showAlert={showAlert} msg={msg} />
-                        <h1 className="font-mont text-[32px] font-bold col-span-12">
+                        <h1 className="font-mont text-[24px] md:text-[32px] font-bold col-span-12">
                             Ready to play trade mark detective? <br />
                             Conduct a free preliminary search for your trade mark.
                         </h1>
@@ -117,7 +117,7 @@ const Select = () => {
                                 This initial automated check and trade mark application is for <b> Australia only </b>.
                             </>
                         } />
-                        <section onClick={() => setWordLogo('Word')} className="col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
+                        <section onClick={() => setWordLogo('Word')} className="col-span-12 md:col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
                             <div className="flex gap-2 items-center p-4">
                                 <Radio checked={isWordLogo === 'Word'}
                                     onChange={handleWordLogoChange}
@@ -133,7 +133,7 @@ const Select = () => {
                                 <p className="text-[14px] leading-6 font-mont">UGG</p>
                             </div>
                         </section>
-                        <section onClick={() => setWordLogo('Logo')} className="col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
+                        <section onClick={() => setWordLogo('Logo')} className="col-span-12 md:col-span-6 flex flex-col rounded-md border border-[#C8CAD0] cursor-pointer">
                             <div className="flex gap-2 items-center p-4">
                                 <Radio checked={isWordLogo === 'Logo'}
                                     onChange={handleWordLogoChange}
@@ -150,7 +150,7 @@ const Select = () => {
                             </div>
                         </section>
                         {isWordLogo === "Word" &&
-                            <section className="col-span-6 flex flex-col gap-2">
+                            <section className="col-span-12 md:col-span-6 flex flex-col gap-2">
                                 <h3 className="text-[18px] font-mont leading-6">Enter word or phrase</h3>
                                 <span className="text-[14px] leading-6 text-[#72757e]">For example: Green Back</span>
                                 <input value={word} required onChange={e => setWord(e.target.value)} className={`h-16 px-5 py-3 bg-[#F5F6F7] border-b-2 ${word?.trim() === "" ? "border-red-600" : "border-black"}`} />
@@ -168,7 +168,7 @@ const Select = () => {
                                             <h5 className="text-[16px] leading-7 font-mont">Tips about images</h5>
                                             <svg className={`w-[25px] h-[25px] align-baseline inline-block stroke-black fill-[#30aeb6] transition-all ease-in-out ${collapsed ? "rotate-[0deg]" : "rotate-[360deg]"}`}><use href={`#${collapsed ? "add" : "subtract"}`}></use></svg>
                                         </button>
-                                        <div className={`overflow-hidden transition-all ease-in-out duration-500 ${collapsed ? "h-[0px]" : "h-[280px]"}`}>
+                                        <div className={`overflow-hidden transition-all ease-in-out duration-500 ${collapsed ? "h-[0px]" : "h-[300px]"}`}>
                                             <hr />
                                             <div className="flex flex-col gap-4 p-8">
                                                 <strong>What you need to know</strong>
@@ -187,13 +187,13 @@ const Select = () => {
                                         </div>
                                     </div>
                                 </section>
-                                <section className="col-span-6">
+                                <section className="col-span-12 md:col-span-6">
                                     <UploadLogo image={{ imageDataUrl, setImageDataUrl }} />
                                     {!validUploadLogo && (
                                         <span className="text-red-600 text-xs leading-6">Upload logo file to continue.</span>
                                     )}
                                 </section>
-                                <section className="col-span-6 flex flex-col gap-4">
+                                <section className="col-span-12 md:col-span-6 flex flex-col gap-4">
                                     <div className="flex flex-col gap-2">
                                         <p className="text-[16px] font-semibold leading-6">Are there word(s) in the image?</p>
                                         <div className="flex gap-2 items-center h-6">

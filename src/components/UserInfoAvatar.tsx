@@ -27,7 +27,7 @@ const UserInfoAvatar = ({ email }: { email: string }) => {//{ user }: { user: Us
                 user ?
                     <div className='user-info-wrap flex flex-col gap-2 justify-center items-center fixed cursor-pointer text-black top-4 right-2 z-[51]'>
                         <style jsx>{`div.user-info-wrap:hover div.user-info { opacity:1; height:160px; }`}</style>
-                        <div className="flex gap-2 w-full justify-end items-center">
+                        <div className="flex flex-col md:flex-row gap-2 w-full justify-end items-end md:items-center text-sm md:text-[16px]">
                             <h2>{user.name} {
                                 // JSON.stringify(user)
                             } </h2>
@@ -53,8 +53,10 @@ const UserInfoAvatar = ({ email }: { email: string }) => {//{ user }: { user: Us
                         </div>
                     </div>
                     :
-                    <button onClick={() => router.push('/auth')} className='user-info-wrap flex flex-col p-2 rounded-md justify-center items-center fixed cursor-pointer text-black z-[51] top-4 right-4 font-mont hover:bg-blue-500 hover:text-white transition-all ease-in-out duration-700 hover:scale-110 hover:border border-black'>
-                        Log in | Sign up
+                    <button onClick={() => router.push('/auth')} className='user-info-wrap flex flex-col md:flex-row gap-x-2 gap-y-0 p-2 rounded-md justify-center items-center fixed cursor-pointer text-black z-[51] top-4 right-4 font-mont hover:bg-blue-500 hover:text-white transition-all ease-in-out duration-700 hover:scale-110 hover:border border-black'>
+                        <p>Log in</p>
+                        <p className="hidden md:block">|</p>
+                        <p>Sign up</p>
                     </button>
             }
         </div>
