@@ -3,8 +3,7 @@ import ServerSidePropsAuthorized from '@/layout/ServerSidePropsAuthorized';
 import Chat from '@/components/Chat';
 import Image from 'next/image';
 import { loadStripe } from '@stripe/stripe-js';
-const NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = 'pk_test_51NRavWKg82trmtxxJorSiVWsfdHTbKTNkflXdbnZKfX7OjYADAnntoRiTNj8zBVMfFAQfeQCnP9e2OZrWG8cEa4k00T7eN4YYy'
-// const NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = 'pk_live_51NRavWKg82trmtxxjqnYkV2teh8EO7T9Y47SbICAiXSrKHv9ihzyCG879MJZlolel5wQ6TNYDuuhQksNPYsd2Y4m00s9f6p31x'
+const NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
 import { useContext, useEffect, useState } from 'react';

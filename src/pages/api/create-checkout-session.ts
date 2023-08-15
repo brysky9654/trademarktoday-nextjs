@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import stripe from 'stripe';
-const stripeSecretKey = 'sk_test_51NRavWKg82trmtxxLGOWXNJulDfXc1dOw9sQC1LieODEjnzGoiEKfxA0PF0xXA47eHsx8jgfqtfV0YLoTyZAhzz300M6oZAlIq';
-// const stripeSecretKey = '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';
+const stripeSecretKey = process.env.stripeSecretKey
 const stripeInstance = new stripe(stripeSecretKey as string, { apiVersion: "2022-11-15" });
 export default async function handler(req: Request, res: Response) {
     const { price, transactionKey } = req.body;
