@@ -12,6 +12,7 @@ dotenv.config({ path: "./.env" });
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+console.log('started')
 app.prepare().then(() => {
   const server = express();
   server.use(morgan('dev'))
@@ -23,7 +24,9 @@ app.prepare().then(() => {
     key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem')
   };
+  console.error('before connecting...')
   connectToMongodb();
+  console.error('after connecting...')
   server.all('*', (req, res) => {
     return handle(req, res);
     // res.send("<h1>This site is temporarily down.</h1> <p>The website developer is waiting response from <b>Syed Mosawi.</b></p><p> Please contact developer.</p> Skype or telegram is available.<i> louiswinkler72@gmail.com</i>");
