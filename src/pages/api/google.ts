@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { JWT_SIGN_KEY} from '@/types/utils';
 import usersModel from '@/models/usersModel';
 import { CLIENT_ID, REDIRECT_URI } from '@/components/SignWithGoogle';
-const CLIENT_SECRET = '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';
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 export default async function handler(req: Request, res: Response): Promise<void> {
   const { code } = req.query;
   const codeAsString: string = code?.toString() ?? '';
@@ -39,13 +39,3 @@ export default async function handler(req: Request, res: Response): Promise<void
     res.status(500).send('Internal Server Error');
   }
 }
-// {
-//   "sub": "113984470218657381190",
-//   "name": "Steven Hocking",
-//   "given_name": "Steven",
-//   "family_name": "Hocking",
-//   "picture": "https://lh3.googleusercontent.com/a/AAcHTtfKc7N_DbbAofMkvfRBt-gbeaJ8rW8-elKMZVrDKgfKTA=s96-c",
-//   "email": "milkyway464203@gmail.com",
-//   "email_verified": true,
-//   "locale": "en"
-// }
