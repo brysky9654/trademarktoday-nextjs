@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import dotenv from 'dotenv'
+dotenv.config({ path: "./.env" });
 export const REDIRECT_URI = 'https://trademarktoday.com.au/api/google';
 // export const REDIRECT_URI = 'https://localhost/api/google';
 export const CLIENT_ID = process.env.CLIENT_ID;

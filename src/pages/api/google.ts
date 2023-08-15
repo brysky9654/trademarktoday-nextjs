@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken'
 import { JWT_SIGN_KEY} from '@/types/utils';
 import usersModel from '@/models/usersModel';
 import { CLIENT_ID, REDIRECT_URI } from '@/components/SignWithGoogle';
+import dotenv from 'dotenv'
+dotenv.config({ path: "./.env" });
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 export default async function handler(req: Request, res: Response): Promise<void> {
   const { code } = req.query;

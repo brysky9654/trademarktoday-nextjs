@@ -2,6 +2,8 @@ import TMCheckLayout from '../layout/TMCheckLayout';
 import ServerSidePropsAuthorized from '@/layout/ServerSidePropsAuthorized';
 import Chat from '@/components/Chat';
 import Image from 'next/image';
+import dotenv from 'dotenv'
+dotenv.config({ path: "./.env" });
 import { loadStripe } from '@stripe/stripe-js';
 const NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);

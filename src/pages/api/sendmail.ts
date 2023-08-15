@@ -1,5 +1,7 @@
 import Nodemailer, { SentMessageInfo, SendMailOptions } from 'nodemailer';
 import { Request, Response } from 'express';
+import dotenv from 'dotenv'
+dotenv.config({ path: "./.env" });
 export default function handler(req: Request, res: Response): void {
     const { email, code } = req.query;
     const transporter = Nodemailer.createTransport({

@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import stripe from 'stripe';
+import dotenv from 'dotenv'
+dotenv.config({ path: "./.env" });
 const stripeSecretKey = process.env.stripeSecretKey
 const stripeInstance = new stripe(stripeSecretKey as string, { apiVersion: "2022-11-15" });
 export default async function handler(req: Request, res: Response) {
