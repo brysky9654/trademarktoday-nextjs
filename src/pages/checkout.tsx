@@ -5,8 +5,7 @@ import Image from 'next/image';
 import dotenv from 'dotenv'
 dotenv.config({ path: "./.env" });
 import { loadStripe } from '@stripe/stripe-js';
-const NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
 import { useContext, useEffect, useState } from 'react';
 import { PiniaStore } from '@/store/store';

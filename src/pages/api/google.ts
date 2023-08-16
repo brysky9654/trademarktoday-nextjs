@@ -2,17 +2,16 @@ import { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
-import { JWT_SIGN_KEY} from '@/types/utils';
+import { JWT_SIGN_KEY } from '@/types/utils';
 import usersModel from '@/models/usersModel';
-import { CLIENT_ID, REDIRECT_URI } from '@/components/SignWithGoogle';
+import { REDIRECT_URI } from '@/components/SignWithGoogle';
 import dotenv from 'dotenv'
 dotenv.config({ path: "./.env" });
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
 export default async function handler(req: Request, res: Response): Promise<void> {
   const { code } = req.query;
   const codeAsString: string = code?.toString() ?? '';
   // Create a new OAuth client instance
-  const oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+  const oauth2Client = new OAuth2Client(process.env.CLIENT_ID, process.env.CLIENT_SECRET, REDIRECT_URI);
 
   try {
     // Verify the authorization code with Google
@@ -26,7 +25,7 @@ export default async function handler(req: Request, res: Response): Promise<void
     const data = await usersModel.find({ email });
     if (data.length === 0) {
       // const {data:_data} = await axios.post('/api/users', { given_name, family_name, picture, email, name })
-      const _data = await usersModel.create({ given_name, family_name, picture, email, name, ACN:'',phone_number:'',address:'' });
+      const _data = await usersModel.create({ given_name, family_name, picture, email, name, ACN: '', phone_number: '', address: '' });
     }
     const token = jwt.sign({ email }, JWT_SIGN_KEY);
     res.setHeader(
