@@ -56,7 +56,7 @@ This is for <a href='https://trademarktoday.com.au'>trademarktoday.com.au</a>
 ![Trademarktoday](https://github.com/LouisWinkler/trademarktoday-nextjs/blob/master/public/01.png?raw=true)
 ![Trademarktoday](https://github.com/LouisWinkler/trademarktoday-nextjs/blob/master/public/02.png?raw=true)
 ## Built With :package:
-
+<p>
 <img alt="Node.js" src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" />
 <img alt="Next.js" src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white" />
 <img alt="Next.js" src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" />
@@ -66,11 +66,14 @@ This is for <a href='https://trademarktoday.com.au'>trademarktoday.com.au</a>
 <img alt="Github" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" /> 
 <br>
 <img alt="Open Source? Yes!" src="https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github" /> 
+</p>
+
+<p>
 <img alt="Next.js" src="https://img.shields.io/badge/Stripe-red" />
 <img alt="Next.js" src="https://img.shields.io/badge/PayPal-blue" />
 <img alt="Next.js" src="https://img.shields.io/badge/Live_Chat-green" />
 <img alt="Next.js" src="https://img.shields.io/badge/Email-Verification-cyan" />
-
+</p>
 ## How to run locally? :dart:
 
   Make sure you have [Nodejs](https://nodejs.org/en/download) installed.
