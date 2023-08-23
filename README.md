@@ -64,11 +64,10 @@ This is for <a href='https://trademarktoday.com.au'>trademarktoday.com.au</a>
 <img alt="Next.js" src="https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white" />
 <img alt="Next.js" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
 <img alt="Github" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" /> 
-<br>
-<img alt="Open Source? Yes!" src="https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github" /> 
 </p>
 
 <p>
+<img alt="Open Source? Yes!" src="https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github" /> 
 <img alt="Next.js" src="https://img.shields.io/badge/Stripe-red" />
 <img alt="Next.js" src="https://img.shields.io/badge/PayPal-blue" />
 <img alt="Next.js" src="https://img.shields.io/badge/Live_Chat-green" />
