@@ -25,6 +25,8 @@
 	<p align="center">
 		This is the source code for my Freelancer account creating bot.
 		<br/>
+        This project is maintained by <a href='https://seniorcoder72.github.io'>@seniorcoder72</a>
+		<br/>
 		<a href="https://seniorcoder72.github.io"><strong>Explore the docs »</strong></a>
 		<br/>
 		<br/>
