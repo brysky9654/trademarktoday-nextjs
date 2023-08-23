@@ -25,6 +25,25 @@
         "tutorial",
         "video"
       ]
+    },
+    {
+      "login": "LouisWinkler",
+      "name": "LouisWinkler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/138194633?v=4",
+      "profile": "https://github.com/LouisWinkler",
+      "contributions": [
+        "code",
+        "content",
+        "doc",
+        "data",
+        "example",
+        "ideas",
+        "projectManagement",
+        "review",
+        "tool",
+        "tutorial",
+        "video"
+      ]
     }
   ],
   "contributorsPerLine": 7,
