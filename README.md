@@ -73,6 +73,7 @@ This is for <a href='https://trademarktoday.com.au'>trademarktoday.com.au</a>
 <img alt="Next.js" src="https://img.shields.io/badge/Live_Chat-green" />
 <img alt="Next.js" src="https://img.shields.io/badge/Email-Verification-cyan" />
 </p>
+
 ## How to run locally? :dart:
 
   Make sure you have [Nodejs](https://nodejs.org/en/download) installed.
