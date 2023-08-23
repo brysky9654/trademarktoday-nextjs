@@ -14,7 +14,7 @@ export default function handler(req: Request, res: Response): void {
         secure: false,
         auth: {
             user: process.env.GMAIL_USER,
-            pass: process.env.GMAIL_PASS
+            pass: process.env.GMAIL_AUTH
         }
     });
     const mailOptions: SendMailOptions = {
