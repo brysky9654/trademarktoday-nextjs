@@ -27,7 +27,9 @@
 		<br/>
         This project is maintained by <a href='https://seniorcoder72.github.io'>@seniorcoder72</a>
 		<br/>
-		<a href="https://seniorcoder72.github.io"><strong>Explore the docs »</strong></a>
+        <strong>Don't forget to star ⭐ this repository.</strong>
+        <br/>
+		<a href="https://seniorcoder72.github.io">Explore the docs »</a>
 		<br/>
 		<br/>
 		<a href="https://trademarktoday.com.au">Visit Site</a>
