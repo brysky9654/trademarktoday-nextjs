@@ -28,12 +28,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const imageWidth = '1920'
 
   const imageHeight = '960'
-
+  const url = 'https://trademarktoday.com.au'
+  const image = 'https://trademarktoday.com.au/01.png'
   const [pinia, setPinia] = useState({});
-  useEffect(()=>{
+  useEffect(() => {
     const _pinia = JSON.parse(localStorage.getItem('pinia') as string);
     setPinia(_pinia);
-  },[])
+  }, [])
   useEffect(() => {
     localStorage.setItem('pinia', JSON.stringify(pinia));
   }, [pinia])
@@ -46,11 +47,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               <meta name="description" content={description} />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-              {/* <meta property="og:url" content={url} /> */}
+              <meta property="og:url" content={url} />
               <meta property="og:site_name" content="Trade mark today for Australian trademark registration and protecting" />
               <meta property="og:title" content={title} />
               <meta property="og:description" content={description} />
-              {/* <meta property="og:image" content={image} /> */}
+              <meta property="og:image" content={image} />
               <meta property="og:image:type" content="image/png" />
               <meta property="og:image:width" content={imageWidth} />
               <meta property="og:image:height" content={imageHeight} />
@@ -58,7 +59,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               <meta property="twitter:card" content="summary_large_image" />
               <meta property="twitter:title" content={title} />
               <meta property="twitter:description" content={description} />
-              {/* <meta property="twitter:image:src" content={image} /> */}
+              <meta property="twitter:image:src" content={image} />
               <meta property="twitter:image:width" content={imageWidth} />
               <meta property="twitter:image:height" content={imageHeight} />
               <title> Trade Mark Today for Australia </title>
@@ -84,7 +85,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             {/* <div id="main-start-section" className='flex flex-col'>
               <div className='pb-5 flex-grow'>
                 <Header /> */}
-            <PiniaStore.Provider value={{pinia, setPinia}} >
+            <PiniaStore.Provider value={{ pinia, setPinia }} >
               <Component {...pageProps} />
             </PiniaStore.Provider>
             {/* </div>
