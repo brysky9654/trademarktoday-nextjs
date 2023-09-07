@@ -8,7 +8,7 @@ export default async function handler(req: Request, res: Response): Promise<void
   const { code } = req.query;
   const codeAsString: string = code?.toString() ?? '';
   // Create a new OAuth client instance
-  const oauth2Client = new OAuth2Client(process.env.NEXT_PUBLIC_CLIENT_ID, process.env.NEXT_PUBLIC_CLIENT_SECRET, process.env.NEXT_PUBLIC_REDIRECT_URI);
+  const oauth2Client = new OAuth2Client(process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.REDIRECT_URI);
 
   try {
     // Verify the authorization code with Google
