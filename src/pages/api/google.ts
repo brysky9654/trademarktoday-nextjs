@@ -4,14 +4,11 @@ import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import { JWT_SIGN_KEY } from '@/types/utils';
 import usersModel from '@/models/usersModel';
-import { REDIRECT_URI } from '@/components/SignWithGoogle';
-import dotenv from 'dotenv'
-dotenv.config({ path: "./.env" });
 export default async function handler(req: Request, res: Response): Promise<void> {
   const { code } = req.query;
   const codeAsString: string = code?.toString() ?? '';
   // Create a new OAuth client instance
-  const oauth2Client = new OAuth2Client(process.env.CLIENT_ID, process.env.CLIENT_SECRET, REDIRECT_URI);
+  const oauth2Client = new OAuth2Client(process.env.NEXT_PUBLIC_CLIENT_ID, process.env.NEXT_PUBLIC_CLIENT_SECRET, process.env.NEXT_PUBLIC_REDIRECT_URI);
 
   try {
     // Verify the authorization code with Google

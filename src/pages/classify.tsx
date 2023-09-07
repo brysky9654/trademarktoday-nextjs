@@ -144,14 +144,14 @@ const Classify = () => {
         if (pinia.classes !== undefined && Object.keys(pinia.classes).length > 0) {
             setWaiting(true);
             //! here
-            const query = pinia?.markType === 'Word' ? pinia?.word : (pinia?.wordContained ? pinia?.containedWord : 'Trade');
-            const accessToken: string = await getTokenIPAustralia();
-            const { count, trademarkIds }: { count: number, trademarkIds: string[] } = await quickSearchIPAustralia(query as string, accessToken)
-            const searchRes = await Promise.all(trademarkIds.slice(0, 20).map(async tId => {
-                const { data: { number, words, images } }: { data: { number: string, words: string[], images: { description: string, images: string[] } } } = await axios.get(`https://test.api.ipaustralia.gov.au/public/australian-trade-mark-search-api/v1/trade-mark/${tId}`);
-                return { number, words, images }
-            }))
-            console.log('here', searchRes)
+            // const query = pinia?.markType === 'Word' ? pinia?.word : (pinia?.wordContained ? pinia?.containedWord : 'Trade');
+            // const accessToken: string = await getTokenIPAustralia();
+            // const { count, trademarkIds }: { count: number, trademarkIds: string[] } = await quickSearchIPAustralia(query as string, accessToken)
+            // const searchRes = await Promise.all(trademarkIds.slice(0, 20).map(async tId => {
+            //     const { data: { number, words, images } }: { data: { number: string, words: string[], images: { description: string, images: string[] } } } = await axios.get(`https://test.api.ipaustralia.gov.au/public/australian-trade-mark-search-api/v1/trade-mark/${tId}`);
+            //     return { number, words, images }
+            // }))
+            // console.log('here', searchRes)
             //! here
             setWaiting(false);
             router.push('/summary');

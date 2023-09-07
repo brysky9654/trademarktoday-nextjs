@@ -22,9 +22,9 @@ const Start = () => {
           <h1 className='font-mont leading-[40px] md:leading-[80px] text-[24px] md:text-[50px] text-white [text-shadow:_1px_3px_5px_rgb(0_0_0_/_100%)] pt-20 text-right w-full cursor-pointer hover:scale-110 lg:hover:scale-125 ease-in-out duration-1000'>Don&apos;t let copycats hijack <br /> your brand&apos;s identity</h1>
           {/* <div className='flex justify-center items-center bg-[#E0F3F4] px-4 py-2 rounded-sm font-bold'><span>TM</span></div> */}
         </div>
-        <div className="flex flex-col items-end text-white [text-shadow:_1px_3px_5px_rgb(0_0_0_/_100%)]">
-          <div className="p-2 font-mont text-xs md:text-[20px] flex text-center items-center rounded-full w-fit">{/*  bg-white/60 shadow-[0_0_8px_8px_rgba(255,255,255,0.6)] */}
-            Let&apos;s kick off the process of
+        <div className="flex flex-col gap-4 items-end text-white [text-shadow:_1px_3px_5px_rgb(0_0_0_/_100%)]">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-0 font-mont text-xs md:text-[20px] text-center items-end md:items-center rounded-full w-fit">{/*  bg-white/60 shadow-[0_0_8px_8px_rgba(255,255,255,0.6)] */}
+            <p className="px-2">Let&apos;s kick off the process of</p>
             <div className="badge-container leading-[45px] text-[30px] inline-block overflow-y-clip w-[250px] px-3 py-6 h-[32px] mx-2 bg-red-500/90 text-blue-100 rounded-xl relative  hover:shadow-[0px_0px_3px_3px_#333] hover:scale-150 transition-all ease-in-out duration-1000 cursor-pointer">{/*  shadow-[0_0_8px_8px_#ccc] */}
               <style jsx>{`
                   div.badge-content {
@@ -40,9 +40,9 @@ const Start = () => {
                 <h2>Protecting</h2>
               </div>
             </div>
-            your brand
           </div>
-          <div className="p-2 font-mont text-xs md:text-[20px] flex items-center rounded-full w-fit">{/*  bg-white/60 shadow-[0_0_8px_8px_rgba(255,255,255,0.6)] */}
+          <div className="px-2 font-mont text-xs md:text-[20px] flex items-center rounded-full w-fit">{/*  bg-white/60 shadow-[0_0_8px_8px_rgba(255,255,255,0.6)] */}
+            your brand
             and have some fun while doing it!
           </div>
         </div>
