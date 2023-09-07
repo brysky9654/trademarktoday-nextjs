@@ -46,7 +46,7 @@ const Header = () => {
                 <div className='max-w-7xl min-w-[400px] px-6 flex mx-auto items-center justify-between'>
                     <div className="flex items-center gap-2">
 
-                        <Link href='/' className='py-[10px] gap-4 flex-row flex min-w-[40px]'>
+                        <Link href='/' className='py-[10px] gap-4 flex-row flex md:scale-80 scale-75'>
                             <button>
                                 <div className="flex h-14 items-center hover:scale-125 transition-all ease-in-out duration-1000 ">
                                     <Image src="/trademarktoday_logo.png" alt="Logo" width={150} height={48} priority style={{ visibility: 'visible' }} />
@@ -55,7 +55,7 @@ const Header = () => {
                             <div className='w-0 border-r hidden md:block border-black'></div>
                             {/* <button className=' hidden md:block font-mont text-2xl italic text-red-500'>Trade Mark Today</button> */}
                         </Link>
-                        <ul className="flex gap-y-0 gap-x-4 sm:gap-4 pl-4 cursor-pointer flex-wrap text-xs md:text-[16px]">
+                        <ul className="md:flex hidden gap-y-0 gap-x-4 sm:gap-4 pl-4 cursor-pointer flex-wrap text-xs md:text-[16px]">
                             <li>About Us</li>
                             <li>Services</li>
                             <li>Pricing</li>
@@ -67,15 +67,15 @@ const Header = () => {
                             </>}
                         </ul>
                     </div>
-                    <nav className="mr-16 md:mr-36 flex flex-col md:flex-row 2xl:mr-0">
-                        <button className='px-3 '>
-                            <div className='flex flex-col md:flex-row gap-1 text-xs md:text-sm items-center'>
-                                <div className='w-6 h-6 md:w-8 md:h-8 py-1 flex items-center text-center'><Image width={36} height={36} src='/icons8-help-94.png' alt="help" loading="lazy" /></div> Help
+                    <nav className="mr-36 md:mr-36 flex 2xl:mr-0">
+                        <button className='px-1 md:px-3 '>
+                            <div className='flex flex-row gap-1 text-xs md:text-sm items-center'>
+                                <div className='w-6 h-6 md:w-8 md:h-8 py-1 flex items-center text-center'><Image width={36} height={36} src='/icons8-help-94.png' alt="help" loading="lazy" /></div> <span className="hidden md:block">Help</span>
                             </div>
                         </button>
-                        <button className='px-3 '>
-                            <div className='flex flex-col md:flex-row gap-1 text-xs md:text-sm items-center'>
-                                <div className='w-6 h-6 md:w-8 md:h-8 py-1 flex items-center text-center'><Image width={36} height={36} src='/icons8-popular-94.png' alt="help" loading="lazy" /></div> Feedback
+                        <button className='px-1 md:px-3 '>
+                            <div className='flex flex-row gap-1 text-xs md:text-sm items-center'>
+                                <div className='w-6 h-6 md:w-8 md:h-8 py-1 flex items-center text-center'><Image width={36} height={36} src='/icons8-popular-94.png' alt="help" loading="lazy" /></div> <span className="hidden md:block">Feedback</span>
                             </div>
                         </button>
                     </nav>
