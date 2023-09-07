@@ -13,12 +13,12 @@ export default function handler(req: Request, res: Response): void {
         port: 587,
         secure: false,
         auth: {
-            user: process.env.NEXT_PUBLIC_GMAIL_USER,
-            pass: process.env.NEXT_PUBLIC_GMAIL_AUTH
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_AUTH
         }
     });
     const mailOptions: SendMailOptions = {
-        from: process.env.NEXT_PUBLIC_GMAIL_USER,
+        from: process.env.GMAIL_USER,
         to: email as string,
         subject: 'Trademark today verfication',
         html: `<div width="100%" style="margin:0;background-color:#f0f2f3">
