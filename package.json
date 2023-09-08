@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node server",
+    "serve": "node server",
     "dev": "next dev",
     "build": "next build",
-    "serve": "next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
