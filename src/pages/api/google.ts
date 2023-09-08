@@ -4,7 +4,9 @@ import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import { JWT_SIGN_KEY } from '@/types/utils';
 import usersModel from '@/models/usersModel';
+import connectToMongodb from '@/db/mongodb'
 export default async function handler(req: Request, res: Response): Promise<void> {
+  connectToMongodb();
   const { code } = req.query;
   const codeAsString: string = code?.toString() ?? '';
   // Create a new OAuth client instance
