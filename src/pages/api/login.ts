@@ -4,7 +4,9 @@ import { AuthStatus, User } from "@/types/interface";
 import { Request, Response } from "express";
 import { JWT_SIGN_KEY } from "@/types/utils";
 import usersModel from '@/models/usersModel';
+import connectToMongodb from '@/db/mongodb'
 export default async function handler(req: Request, res: Response) {
+    connectToMongodb();
     let authStatus: AuthStatus = "NONE";
     const { email, password } = req.body;
     try {
